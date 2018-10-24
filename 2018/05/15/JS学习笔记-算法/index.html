@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="">
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="JS学习笔记-算法">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="子墨">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.png?v=2.10.1">
+
+
+
+<link rel="canonical" href="http://yoursite.com/2018/05/15/JS学习笔记-算法/">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.1">
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true};
+</script>
+
+    <title> JS学习笔记-算法 - 子墨 </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">子墨</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">子墨</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          JS学习笔记-算法
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-05-15
+        </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-二维数组的全排列组合"><span class="toc-text">1.二维数组的全排列组合</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-打印青蛙跳台阶的所有方式"><span class="toc-text">2.打印青蛙跳台阶的所有方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-统计一个字符串出现最多的字母"><span class="toc-text">3.统计一个字符串出现最多的字母</span></a></li></ol><li class="toc-item toc-level-3"><a class="toc-link" href="#排序算法"><span class="toc-text">排序算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-冒泡排序"><span class="toc-text">4.冒泡排序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-快速排序"><span class="toc-text">5.快速排序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-生成指定范围内的随机数"><span class="toc-text">6.生成指定范围内的随机数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-利用一个for循环找出一个数组中第二大的数"><span class="toc-text">7.利用一个for循环找出一个数组中第二大的数</span></a></li></ol>
+    </li></div>
+  </div>
+
+
+
+    <div class="post-content">
+      
+        <h4 id="1-二维数组的全排列组合"><a href="#1-二维数组的全排列组合" class="headerlink" title="1.二维数组的全排列组合"></a><strong>1.二维数组的全排列组合</strong></h4><blockquote>
+<p>如输入[[1,2],[3,4],[5,6]]</p>
+<p>  输出：</p>
+<p>  [ 1, 3, 5 ]</p>
+<p>  [ 1, 3, 6 ]</p>
+<p>  [ 1, 4, 5 ]</p>
+<p>  [ 1, 4, 6 ]</p>
+<p>  [ 2, 3, 5 ]</p>
+<p>  [ 2, 3, 6 ]</p>
+<p>  [ 2, 4, 5 ]</p>
+<p>  [ 2, 4, 6 ]</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">printArr</span>(<span class="params">arr,n,res</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i&lt;arr[i].length;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(n == <span class="number">0</span>)&#123;</span><br><span class="line">            res = []</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(n&lt;arr.length)&#123;</span><br><span class="line">            <span class="keyword">var</span> _res = res.slice()</span><br><span class="line">            _res.push(arr[n][i])</span><br><span class="line">            <span class="keyword">if</span>(n == arr.length<span class="number">-1</span>)&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(_res)</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                printArr(arr,n+<span class="number">1</span>,_res)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 测试：</span></span><br><span class="line"><span class="keyword">var</span> arr = [[<span class="number">1</span>,<span class="number">2</span>],[<span class="number">3</span>,<span class="number">4</span>],[<span class="number">5</span>,<span class="number">6</span>]]</span><br><span class="line">printArr(arr,<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="2-打印青蛙跳台阶的所有方式"><a href="#2-打印青蛙跳台阶的所有方式" class="headerlink" title="2.打印青蛙跳台阶的所有方式"></a><strong>2.打印青蛙跳台阶的所有方式</strong></h4><blockquote>
+<p>注意 不是求方式的个数，而是打印每种情况   台阶数为10，每次跳1格或两格</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">step</span>(<span class="params">n,res</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(n==<span class="number">0</span>)&#123;</span><br><span class="line">        res=[]</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> i=<span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span>(i&lt;<span class="number">3</span>)&#123;</span><br><span class="line">        <span class="keyword">if</span>(n+i&lt;=<span class="number">10</span>)&#123;</span><br><span class="line">            <span class="keyword">var</span> _res = res.slice()</span><br><span class="line">            _res.push(i)</span><br><span class="line">            <span class="keyword">if</span>(n+i == <span class="number">10</span>) &#123;</span><br><span class="line">                <span class="built_in">console</span>.log(_res)</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                step(n+i, _res)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        i++</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">step(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="3-统计一个字符串出现最多的字母"><a href="#3-统计一个字符串出现最多的字母" class="headerlink" title="3.统计一个字符串出现最多的字母"></a><strong>3.统计一个字符串出现最多的字母</strong></h4><blockquote>
+<p>输入 ： afjghdfraaaasdenas</p>
+<p>输出：a</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">findMaxDuplicateChar</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (str.length == <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> str;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> charObj = &#123;&#125;;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; str.length; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!charObj[str.charAt(i)]) &#123;</span><br><span class="line">            charObj[str.charAt(i)] = <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            charObj[str.charAt(i)] += <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> maxChar = <span class="string">''</span>,</span><br><span class="line">        maxValue = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> k <span class="keyword">in</span> charObj) &#123;</span><br><span class="line">        <span class="keyword">if</span> (charObj[k] &gt;= maxValue) &#123;</span><br><span class="line">            maxChar = k;</span><br><span class="line">            maxValue = charObj[k];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> maxChar;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 测试：</span></span><br><span class="line">findMaxDuplicateChar(<span class="string">'afjghdfraaaasdenas'</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="排序算法"><a href="#排序算法" class="headerlink" title="排序算法"></a>排序算法</h3><p>排序算法有很多种，而经典的和用的比较多的就是冒泡和快排，<a href="http://jsdo.it/norahiko/oxIy/fullscreen" target="_blank" rel="noopener">动画演示</a></p>
+<h4 id="4-冒泡排序"><a href="#4-冒泡排序" class="headerlink" title="4.冒泡排序"></a><strong>4.冒泡排序</strong></h4><blockquote>
+<p>输入 ： [33,1,4,23,12,43,54,34]</p>
+<p>输出：[1, 4, 12, 23, 33, 34, 43, 54]</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bubble</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i= <span class="number">0</span>; i&lt; arr.length <span class="number">-1</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> j= i; j&lt; arr.length <span class="number">-1</span>; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span>(arr[j] &gt; arr[j+<span class="number">1</span>]) &#123;</span><br><span class="line">                <span class="keyword">var</span> tmp = arr[j];</span><br><span class="line">                arr[j] = arr[j+<span class="number">1</span>];</span><br><span class="line">                arr[j+<span class="number">1</span>] = tmp;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//测试:</span></span><br><span class="line"><span class="built_in">console</span>.log(bubble([<span class="number">33</span>, <span class="number">1</span>, <span class="number">4</span>, <span class="number">23</span>, <span class="number">12</span>, <span class="number">43</span>, <span class="number">54</span>, <span class="number">34</span>]));</span><br></pre></td></tr></table></figure>
+<h4 id="5-快速排序"><a href="#5-快速排序" class="headerlink" title="5.快速排序"></a><strong>5.快速排序</strong></h4><blockquote>
+<p>输入 ： [33,1,4,23,12,43,54,34]</p>
+<p>输出：[1, 4, 12, 23, 33, 34, 43, 54]</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">quick</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (arr.length &lt;= <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> arr;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> middleIndex = <span class="built_in">Math</span>.floor(arr.length / <span class="number">2</span>);</span><br><span class="line">    <span class="keyword">var</span> middle = arr.splice(middleIndex, <span class="number">1</span>)[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">var</span> leftArr = [],</span><br><span class="line">        rightArr = [];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (arr[i] &lt; middle) &#123;</span><br><span class="line">            leftArr.push(arr[i]);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            rightArr.push(arr[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> quick(leftArr).concat([middle], quick(rightArr));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(quick([<span class="number">33</span>,<span class="number">1</span>,<span class="number">4</span>,<span class="number">23</span>,<span class="number">12</span>,<span class="number">43</span>,<span class="number">54</span>,<span class="number">34</span>]));</span><br></pre></td></tr></table></figure>
+<h4 id="6-生成指定范围内的随机数"><a href="#6-生成指定范围内的随机数" class="headerlink" title="6.生成指定范围内的随机数"></a><strong>6.生成指定范围内的随机数</strong></h4><blockquote>
+<p>输入 ： 5，10</p>
+<p>输出：5，7，9，8，6，10……</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">randomNum</span>(<span class="params">min, max</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * (max - min + <span class="number">1</span>)) + min;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">setInterval(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(randomNum(<span class="number">5</span>, <span class="number">10</span>));</span><br><span class="line">&#125;,<span class="number">1000</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="7-利用一个for循环找出一个数组中第二大的数"><a href="#7-利用一个for循环找出一个数组中第二大的数" class="headerlink" title="7.利用一个for循环找出一个数组中第二大的数"></a><strong>7.利用一个for循环找出一个数组中第二大的数</strong></h4><blockquote>
+<p>输入 ： [1, 3, 6, 4, 8, 23, 54, 11]</p>
+<p>输出：23</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getSecond</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> largestNum = arr[<span class="number">0</span>] &gt; arr[<span class="number">1</span>]? arr[<span class="number">0</span>] : arr[<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">var</span> secondNum = arr[<span class="number">0</span>] &lt;= arr[<span class="number">1</span>]? arr[<span class="number">0</span>] : arr[<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> i =<span class="number">2</span>; i&lt; arr.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span>(arr[i] &gt; largestNum) &#123;</span><br><span class="line">                secondNum = largestNum;</span><br><span class="line">                largestNum = arr[i];</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(arr[i] &gt; secondNum) &#123;</span><br><span class="line">                secondNum = arr[i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> secondNum;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">console</span>.log(getSecond([<span class="number">1</span>, <span class="number">3</span>, <span class="number">6</span>, <span class="number">4</span>, <span class="number">8</span>, <span class="number">23</span>, <span class="number">54</span>, <span class="number">11</span>]));</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+      
+      
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2018/05/25/工作笔记/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">工作笔记</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2018/05/09/JS学习笔记-Promise/">
+        <span class="next-text nav-default">JS学习笔记-Promise</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:songtao_st08@163.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/youstde" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2015 - 
+    
+    2018
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">songtao</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  
+
+  
+
+
+
+    
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.10.1"></script>
+
+  </body>
+</html>

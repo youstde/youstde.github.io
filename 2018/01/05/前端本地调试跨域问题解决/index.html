@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="">
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="前端本地调试跨域问题解决">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="子墨">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.png?v=2.10.1">
+
+
+
+<link rel="canonical" href="http://yoursite.com/2018/01/05/前端本地调试跨域问题解决/">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.1">
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true};
+</script>
+
+    <title> 前端本地调试跨域问题解决 - 子墨 </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">子墨</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">子墨</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          前端本地调试跨域问题解决
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-01-05
+        </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#写在前面"><span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#补充两点："><span class="toc-text">补充两点：</span></a></li></ol>
+    </div>
+  </div>
+
+
+
+    <div class="post-content">
+      
+        <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a><code>写在前面</code></h2><p><a href="http://blog.csdn.net/cjd6568358/article/details/51871039" target="_blank" rel="noopener">传送门</a></p>
+<p>项目全局配置，这个是接口请求和登录请求的host</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports=&#123;</span><br><span class="line">    apiHost: <span class="string">"//ssppre.adbaitai.com"</span>,<span class="comment">//接口apihost</span></span><br><span class="line">    loginApiHost: <span class="string">"//ssppre.adbaitai.com"</span><span class="comment">//登录和apiHost区分出来主要是本地代理无法处理登录问题</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>而这个项目的预发host是<code>ssppre.adbaitai.com</code></p>
+<p>我本地通过Nginx配合hosts绑定，做了一个反向代理，将<code>h6.ssppre.adbaitai.com</code>,代理到<code>http://localhost:8084</code></p>
+<p>这样做的目的是想在本地能够调用预发的登录接口，如果不做这层代理的话，直接<code>http://localhost:8084</code>打开项目是种不上登录的cookie的，因为跨域</p>
+<p>做到这一步应用是成功登录了，但是后续的一些接口请求是报错的，因为我本地是h6.ssppre.adbaitai.com,而apiHost是//ssppre.adbaitai.com。</p>
+<p><img src="http://ww1.sinaimg.cn/large/005QDhBjgy1fn5yzwu1wpj327y15ah3o.jpg" alt=""></p>
+<p>同样还是跨域问题，现在要做的是对接口的调用进行代理</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports=&#123;</span><br><span class="line">    apiHost: <span class="string">"//h6.ssppre.adbaitai.com"</span>,<span class="comment">//接口apihost</span></span><br><span class="line">    loginApiHost: <span class="string">"//ssppre.adbaitai.com"</span><span class="comment">//登录和apiHost区分出来主要是本地代理无法处理登录问题</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>如上，将apiHost改成本地的，然后再将Nginx改一下</p>
+<p><img src="http://ww1.sinaimg.cn/large/005QDhBjgy1fn5z2euvypj30vk0f0mz1.jpg" alt=""></p>
+<p>将带有api 的请求都进行拦截，然后走ssppre.adbaitai.com</p>
+<p>这样就解决了本地调试跨域问题</p>
+<p><code>但是</code>，我这几天自己在搭一个博客系统的时候发现这个方法行不通了</p>
+<p>纳尼😱，试了很多次都是404(因为之前的方法可以是后端已经做了cors的处理，所以直接拦截api就可以实现代理)</p>
+<p>很多人觉得不应该是报跨域的错吗，然而并没有，是404</p>
+<p>为什么会出现404，很显然，这是代理成功了，也请求到了我的接口，而且我接口日志中也有请求日志，既然请求到了为什么会是404，原因就是，你请求我，但是我不想给你数据</p>
+<p>解决这个问题的方法有两种（我喜欢用的两种）：</p>
+<p>1.我后台是koa2搭的，所以我引入了一个插件—<code>koa2-cors</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">'koa'</span>);</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> config = <span class="built_in">require</span>(<span class="string">'./config/default.js'</span>);</span><br><span class="line"><span class="comment">// const cors = require('koa2-cors');</span></span><br><span class="line"><span class="keyword">const</span> middlewares = <span class="built_in">require</span>(<span class="string">'./middlewares/middlewares.js'</span>);</span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</span><br><span class="line"><span class="comment">// 具体参数我们在后面进行解释</span></span><br><span class="line">app.use(cors(&#123;</span><br><span class="line">    origin: <span class="function"><span class="keyword">function</span> (<span class="params">ctx</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (ctx.url === <span class="string">'/test'</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"*"</span>; <span class="comment">// 允许来自所有域名请求</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'http://youstde.blog.com'</span>; <span class="comment">// 这样就能只允许localhost:8080 这个域名的请求了</span></span><br><span class="line">    &#125;,</span><br><span class="line">    exposeHeaders: [<span class="string">'WWW-Authenticate'</span>, <span class="string">'Server-Authorization'</span>],</span><br><span class="line">    maxAge: <span class="number">5</span>,</span><br><span class="line">    credentials: <span class="literal">true</span>,</span><br><span class="line">    allowMethods: [<span class="string">'GET'</span>, <span class="string">'POST'</span>, <span class="string">'DELETE'</span>],</span><br><span class="line">    allowHeaders: [<span class="string">'Content-Type'</span>, <span class="string">'Authorization'</span>, <span class="string">'Accept'</span>],</span><br><span class="line">&#125;));</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> main = <span class="keyword">async</span> ctx =&gt; &#123;</span><br><span class="line">	<span class="comment">// ctx.cookies.set(</span></span><br><span class="line"> <span class="comment">//        'cid',</span></span><br><span class="line"> <span class="comment">//        'helloworld',</span></span><br><span class="line"> <span class="comment">//        &#123;</span></span><br><span class="line"> <span class="comment">//            domain: '127.0.0.1',</span></span><br><span class="line"> <span class="comment">//            path: '/',</span></span><br><span class="line"> <span class="comment">//            maxAge: 10 * 60 * 1000,</span></span><br><span class="line"> <span class="comment">//            expires: new Date('2017-02-15'),  // cookie失效时间</span></span><br><span class="line"> <span class="comment">//            httpOnly: false,  // 是否只用于http请求中获取</span></span><br><span class="line"> <span class="comment">//            overwrite: false  // 是否允许重写</span></span><br><span class="line"> <span class="comment">//        &#125;</span></span><br><span class="line"> <span class="comment">//    );</span></span><br><span class="line"> <span class="comment">//单页面应用的话，这个方法只会执行一次</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// app.use(require('./routers/article.js').routes());</span></span><br><span class="line">app.use(<span class="built_in">require</span>(<span class="string">'./routers/sign.js'</span>).routes());</span><br><span class="line">app.use(middlewares);</span><br><span class="line">app.listen(config.port,()=&gt;&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">`app is listenning on <span class="subst">$&#123;config.port&#125;</span>`</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>配置一下corse,这样之前的404就变成了200了</p>
+<p><img src="http://ww1.sinaimg.cn/large/005QDhBjgy1fni8yj1ezfj30xu0ei0wa.jpg" alt=""></p>
+<p>2.Nginx的反向代理</p>
+<p>不是之前的那种做法，只是做api的拦截，然后重定向到指定地址</p>
+<p>是给接口地址新开一个Nginx配置</p>
+<p>至此，接口也从飘红的404变成了绿色的200了,很开心</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span>  &#123;</span><br><span class="line">      <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">      <span class="attribute">server_name</span> youstde.blog.com;</span><br><span class="line"></span><br><span class="line">      <span class="attribute">location</span> / &#123;</span><br><span class="line">          <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">          <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">          <span class="attribute">proxy_set_header</span> Host <span class="variable">$http_host</span>;</span><br><span class="line">          <span class="attribute">proxy_set_header</span> X-Nginx-Proxy <span class="literal">true</span>;</span><br><span class="line">          <span class="attribute">proxy_set_header</span> Connection <span class="string">""</span>;</span><br><span class="line">          <span class="attribute">proxy_pass</span> http://localhost:8080;</span><br><span class="line"></span><br><span class="line">       &#125;</span><br><span class="line">  &#125;</span><br><span class="line"> <span class="section">server</span>  &#123;</span><br><span class="line">      <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">      <span class="attribute">server_name</span> api.youstde.blog.com;</span><br><span class="line"></span><br><span class="line">      <span class="attribute">location</span> / &#123;</span><br><span class="line">          <span class="attribute">add_header</span> <span class="string">'Access-Control-Allow-Origin'</span> <span class="string">'http://youstde.blog.com'</span>;</span><br><span class="line">          <span class="attribute">add_header</span> <span class="string">'Access-Control-Allow-Credentials'</span> <span class="string">'true'</span>;</span><br><span class="line">          <span class="attribute">add_header</span> <span class="string">'Access-Control-Allow-Methods'</span> <span class="string">'GET,POST,OPTIONS'</span>;</span><br><span class="line">          <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">          <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">          <span class="attribute">proxy_set_header</span> Host <span class="variable">$http_host</span>;</span><br><span class="line">          <span class="attribute">proxy_set_header</span> X-Nginx-Proxy <span class="literal">true</span>;</span><br><span class="line">          <span class="attribute">proxy_set_header</span> Connection <span class="string">""</span>;</span><br><span class="line">          <span class="attribute">proxy_pass</span> http://localhost:7001;</span><br><span class="line"></span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="补充两点："><a href="#补充两点：" class="headerlink" title="补充两点："></a><code>补充两点：</code></h2><p>1.路径重写</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span><span class="regexp"> ^~/cross_origin/</span> &#123;</span><br><span class="line">  <span class="comment">#重写路径</span></span><br><span class="line">  <span class="attribute">rewrite</span><span class="regexp"> ^/cross_origin/(.*)$</span> /<span class="variable">$1</span> <span class="literal">break</span>;</span><br><span class="line">  <span class="attribute">proxy_pass</span> http://127.0.0.1:7001/;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>location配置的意思是对包含 “cross_origin” 请求拦截，并对请求路径进行重写，一开始请求路径是<br>“/cross_origin/get_json?type=20170126” ，重写后便成了<br>“/get_json?type=20170126”，$1代表（.<em>）中的内容，而（.</em>）则代表 cross_origin<br>后面的全部字符，也就是我们会把 cross_origin 部分去掉，但是保留 cross_origin 之后的所有字符</p>
+<p>2.反向代理的时候的POST请求</p>
+<p>我用的是axios去做请求处理，但是发送post请求的时候出现了这个情况</p>
+<p><img src="http://ww1.sinaimg.cn/large/005QDhBjgy1fnib3wy8a3j31iq0n4q9k.jpg" alt=""></p>
+<p>很显然是发送了一个预请求，因为不是一个简单的请求</p>
+<p>首先我们得了解什么是简单请求和非简单请求</p>
+<p><a href="https://segmentfault.com/a/1190000000709909" target="_blank" rel="noopener">文章看这里</a></p>
+<p>而且关于axios中如何去设置</p>
+<p><a href="https://github.com/axios/axios#using-applicationx-www-form-urlencoded-format" target="_blank" rel="noopener">看这里</a></p>
+<p><img src="http://ww1.sinaimg.cn/large/005QDhBjgy1fnibczvrhmj31g60tcq9f.jpg" alt=""></p>
+
+      
+    </div>
+
+    
+      
+      
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2018/01/31/webpack至于loader的编写/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">webpack至于loader的编写</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2017/12/28/上拉加载更多的实现/">
+        <span class="next-text nav-default">上拉加载更多的实现</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:songtao_st08@163.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/youstde" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2015 - 
+    
+    2018
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">songtao</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  
+
+  
+
+
+
+    
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.10.1"></script>
+
+  </body>
+</html>

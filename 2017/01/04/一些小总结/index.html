@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="">
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="一些小总结">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="子墨">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.png?v=2.10.1">
+
+
+
+<link rel="canonical" href="http://yoursite.com/2017/01/04/一些小总结/">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.1">
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true};
+</script>
+
+    <title> 一些小总结 - 子墨 </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">子墨</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">子墨</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          一些小总结
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2017-01-04
+        </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-如果浏览器不支持svg格式的图片的时候，进行图片的替换"><span class="toc-text">1.如果浏览器不支持svg格式的图片的时候，进行图片的替换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-移动端当点击菜单换背景图片的时候，同时也添加了选中的样式，有时候在使用浏览器自带的回退按钮的时候图片出不来，或者说是选中状态没有进行切换"><span class="toc-text">2.移动端当点击菜单换背景图片的时候，同时也添加了选中的样式，有时候在使用浏览器自带的回退按钮的时候图片出不来，或者说是选中状态没有进行切换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-当用表格布局的时候，希望在每行的下面都带上两句解释性的话，那么最好是另起一行，然后合并单元格，在合并的单元格里写上需要备注的东西"><span class="toc-text">3.当用表格布局的时候，希望在每行的下面都带上两句解释性的话，那么最好是另起一行，然后合并单元格，在合并的单元格里写上需要备注的东西</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-数据类型的检测"><span class="toc-text">4.数据类型的检测</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-获取页面中元素距离页面top，left-的值"><span class="toc-text">5.获取页面中元素距离页面top，left 的值</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#注意：IE、Firefox3-、Opera9-5、Chrome、Safari支持，在IE中，默认坐标从-2-2-开始计算，导致最终距离比其他浏览器多出两个像素，我们需要做个兼容。"><span class="toc-text">注意：IE、Firefox3+、Opera9.5、Chrome、Safari支持，在IE中，默认坐标从(2,2)开始计算，导致最终距离比其他浏览器多出两个像素，我们需要做个兼容。</span></a></li></ol></li></ol><li class="toc-item toc-level-3"><a class="toc-link" href="#6-数字的固定小数的位数"><span class="toc-text">6.数字的固定小数的位数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-冒泡排序"><span class="toc-text">7.冒泡排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-二分查找"><span class="toc-text">8.二分查找</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-JS中delete只能删除对象的属性"><span class="toc-text">9.JS中delete只能删除对象的属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-arr-reduce-CALLBACK"><span class="toc-text">10.arr.reduce(CALLBACK)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-arr-push-的返回值"><span class="toc-text">11.arr.push()的返回值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-样式初始化"><span class="toc-text">12.样式初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-清除浮动"><span class="toc-text">13.清除浮动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#14-isArray（）"><span class="toc-text">14.isArray（）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#15-nodeName"><span class="toc-text">15.nodeName</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#16-array-filter"><span class="toc-text">16.array.filter()</span></a></li>
+    </div>
+  </div>
+
+
+
+    <div class="post-content">
+      
+        <h3 id="1-如果浏览器不支持svg格式的图片的时候，进行图片的替换"><a href="#1-如果浏览器不支持svg格式的图片的时候，进行图片的替换" class="headerlink" title="1.如果浏览器不支持svg格式的图片的时候，进行图片的替换"></a>1.如果浏览器不支持svg格式的图片的时候，进行图片的替换</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span> = <span class="string">'./image.svg'</span> <span class="attr">onerror</span> = <span class="string">"this.onerror = null;this.src = './image.png'"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-移动端当点击菜单换背景图片的时候，同时也添加了选中的样式，有时候在使用浏览器自带的回退按钮的时候图片出不来，或者说是选中状态没有进行切换"><a href="#2-移动端当点击菜单换背景图片的时候，同时也添加了选中的样式，有时候在使用浏览器自带的回退按钮的时候图片出不来，或者说是选中状态没有进行切换" class="headerlink" title="2.移动端当点击菜单换背景图片的时候，同时也添加了选中的样式，有时候在使用浏览器自带的回退按钮的时候图片出不来，或者说是选中状态没有进行切换"></a>2.移动端当点击菜单换背景图片的时候，同时也添加了选中的样式，有时候在使用浏览器自带的回退按钮的时候图片出不来，或者说是选中状态没有进行切换</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这个时候需要将点击选中的样式给去除了，通过其他方式去控制选中状态，不要点击的同时即切换图片又切换选中状态</span></span><br></pre></td></tr></table></figure>
+<h3 id="3-当用表格布局的时候，希望在每行的下面都带上两句解释性的话，那么最好是另起一行，然后合并单元格，在合并的单元格里写上需要备注的东西"><a href="#3-当用表格布局的时候，希望在每行的下面都带上两句解释性的话，那么最好是另起一行，然后合并单元格，在合并的单元格里写上需要备注的东西" class="headerlink" title="3.当用表格布局的时候，希望在每行的下面都带上两句解释性的话，那么最好是另起一行，然后合并单元格，在合并的单元格里写上需要备注的东西"></a>3.当用表格布局的时候，希望在每行的下面都带上两句解释性的话，那么最好是另起一行，然后合并单元格，在合并的单元格里写上需要备注的东西</h3><p><img src="http://ww3.sinaimg.cn/large/005QDhBjgw1fbmgg7a5j3j31ae0k044o.jpg" alt="Aaron Swartz"></p>
+<p>例如上面的赠品栏的添加，我认为比较好的方式就是合并单元格</p>
+<h3 id="4-数据类型的检测"><a href="#4-数据类型的检测" class="headerlink" title="4.数据类型的检测"></a>4.数据类型的检测</h3><p>1.typeof</p>
+<p>2.这种方式检测的比较精确</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> str = <span class="string">'songtao'</span></span><br><span class="line">[].toString.call(str)  <span class="comment">//[object string]</span></span><br></pre></td></tr></table></figure>
+<h3 id="5-获取页面中元素距离页面top，left-的值"><a href="#5-获取页面中元素距离页面top，left-的值" class="headerlink" title="5.获取页面中元素距离页面top，left 的值"></a>5.获取页面中元素距离页面top，left 的值</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"ie=edge"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css">  * &#123;<span class="attribute">margin</span>:<span class="number">0</span>;<span class="attribute">padding</span>:<span class="number">0</span>;&#125;</span></span><br><span class="line"><span class="css">    <span class="selector-class">.box</span>  &#123;</span></span><br><span class="line"><span class="css">      <span class="selector-tag">width</span><span class="selector-pseudo">:200px</span>;</span></span><br><span class="line"><span class="undefined">      height: 200px;</span></span><br><span class="line"><span class="undefined">      background-color: pink;</span></span><br><span class="line"><span class="css">      <span class="selector-tag">margin-top</span><span class="selector-pseudo">:1300px</span>;</span></span><br><span class="line"><span class="css">      <span class="selector-tag">margin-left</span><span class="selector-pseudo">:200px</span>;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">  </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">getRec</span>(<span class="params">ele</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> _t = <span class="built_in">document</span>.documentElement.clientTop,</span></span><br><span class="line"><span class="javascript">            _l = <span class="built_in">document</span>.documentElement.clientLeft,</span></span><br><span class="line"><span class="undefined">            rect = ele.getBoundingClientRect();</span></span><br><span class="line"><span class="javascript">        <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="undefined">            top: rect.top - _t, </span></span><br><span class="line"><span class="undefined">            right: rect.right - _l,</span></span><br><span class="line"><span class="javascript">            bottom: rect.bottom - _t,  <span class="comment">//元素的底部距离页面顶部的距离</span></span></span><br><span class="line"><span class="javascript">            left: rect.left - _l <span class="comment">//元素右边距离页面左边的距离</span></span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> obj = <span class="built_in">document</span>.querySelector(<span class="string">'.box'</span>)</span></span><br><span class="line"><span class="javascript">    <span class="built_in">console</span>.log(getRec(obj))</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><h5 id="注意：IE、Firefox3-、Opera9-5、Chrome、Safari支持，在IE中，默认坐标从-2-2-开始计算，导致最终距离比其他浏览器多出两个像素，我们需要做个兼容。"><a href="#注意：IE、Firefox3-、Opera9-5、Chrome、Safari支持，在IE中，默认坐标从-2-2-开始计算，导致最终距离比其他浏览器多出两个像素，我们需要做个兼容。" class="headerlink" title="注意：IE、Firefox3+、Opera9.5、Chrome、Safari支持，在IE中，默认坐标从(2,2)开始计算，导致最终距离比其他浏览器多出两个像素，我们需要做个兼容。"></a>注意：IE、Firefox3+、Opera9.5、Chrome、Safari支持，在IE中，默认坐标从(2,2)开始计算，导致最终距离比其他浏览器多出两个像素，我们需要做个兼容。</h5></li>
+</ul>
+<h3 id="6-数字的固定小数的位数"><a href="#6-数字的固定小数的位数" class="headerlink" title="6.数字的固定小数的位数"></a>6.数字的固定小数的位数</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a=<span class="number">8.88888</span>,</span><br><span class="line">    b=<span class="number">8</span>;</span><br><span class="line"><span class="built_in">console</span>.log(a.toFixed(<span class="number">2</span>)); <span class="comment">// 8.89 或者 8.88</span></span><br><span class="line"><span class="built_in">console</span>.log(b.toFixed(<span class="number">2</span>)); <span class="comment">// 8.00</span></span><br></pre></td></tr></table></figure>
+<h3 id="7-冒泡排序"><a href="#7-冒泡排序" class="headerlink" title="7.冒泡排序"></a>7.冒泡排序</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">解析：<span class="number">1.</span>比较相邻的两个元素，如果前一个比后一个大，则交换位置。</span><br><span class="line"></span><br><span class="line">　　　<span class="number">2.</span>第一轮的时候最后一个元素应该是最大的一个。</span><br><span class="line"></span><br><span class="line">　　　<span class="number">3.</span>按照步骤一的方法进行相邻两个元素的比较，这个时候由于最后一个元素已经是最大的了，所以最后一个元素不用比较。</span><br><span class="line"><span class="comment">// 第一轮是对n-1的位置定位</span></span><br><span class="line"><span class="comment">// 第二轮是 每一个位置的数的 确定</span></span><br><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">99</span>, <span class="number">111</span>, <span class="number">112</span>, <span class="number">113</span>, <span class="number">133</span>],</span><br><span class="line">    temp = <span class="number">0</span>,</span><br><span class="line">    flag = <span class="literal">false</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; arr.length - <span class="number">1</span>; i++) &#123;</span><br><span class="line">    <span class="built_in">document</span>.writeln(<span class="string">'come'</span>);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> j = <span class="number">0</span>; j &lt; arr.length - <span class="number">1</span> - i; j++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (arr[j] &gt; arr[j + <span class="number">1</span>]) &#123;</span><br><span class="line">            temp = arr[j];</span><br><span class="line">            arr[j] = arr[j + <span class="number">1</span>];</span><br><span class="line">            arr[j + <span class="number">1</span>] = temp;</span><br><span class="line">            flag = <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (flag) &#123;</span><br><span class="line">        flag = <span class="literal">false</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">    <span class="built_in">document</span>.writeln(arr[i]);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="8-二分查找"><a href="#8-二分查找" class="headerlink" title="8.二分查找"></a>8.二分查找</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">解析：二分查找，也为折半查找。首先要找到一个中间值，通过与中间值比较，大的放又，小的放在左边。再在两边中寻找中间值，持续以上操作，直到找到所在位置为止。</span><br><span class="line"><span class="keyword">var</span> arr = [<span class="number">41</span>, <span class="number">55</span>, <span class="number">76</span>, <span class="number">87</span>, <span class="number">88</span>, <span class="number">99</span>, <span class="number">123</span>, <span class="number">432</span>, <span class="number">546</span>, <span class="number">577</span>, <span class="number">688</span>, <span class="number">786</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">twoFind</span>(<span class="params">arr, wantVal, leftIndex, rightIndex</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (leftIndex &gt; rightIndex) &#123;</span><br><span class="line">        <span class="built_in">document</span>.writeln(<span class="string">'SORRY: 找不到 '</span> + wantVal + <span class="string">' ！'</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> minIndex = <span class="built_in">Math</span>.floor((leftIndex + rightIndex) / <span class="number">2</span>);</span><br><span class="line">    <span class="keyword">if</span> (arr[minIndex] &gt; wantVal) &#123;</span><br><span class="line">        twoFind(arr, wantVal, leftIndex, minIndex - <span class="number">1</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (arr[minIndex] &lt; wantVal) &#123;</span><br><span class="line">        twoFind(arr, wantVal, minIndex + <span class="number">1</span>, rightIndex);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">document</span>.writeln(<span class="string">'找到了 '</span> + wantVal + <span class="string">' ,下表为'</span> + minIndex);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">twoFind(arr, <span class="number">9</span>, <span class="number">0</span>, arr.length - <span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="9-JS中delete只能删除对象的属性"><a href="#9-JS中delete只能删除对象的属性" class="headerlink" title="9.JS中delete只能删除对象的属性"></a>9.JS中delete只能删除对象的属性</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span> (<span class="params"></span>) </span>&#123;&#125;;</span><br><span class="line"><span class="keyword">var</span> me = <span class="keyword">new</span> Person();</span><br><span class="line">me.name=<span class="string">'冯杰'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(me.name);</span><br><span class="line"><span class="keyword">delete</span> me.name;</span><br><span class="line"><span class="built_in">console</span>.log(me.name);</span><br></pre></td></tr></table></figure>
+<h3 id="10-arr-reduce-CALLBACK"><a href="#10-arr-reduce-CALLBACK" class="headerlink" title="10.arr.reduce(CALLBACK)"></a>10.arr.reduce(CALLBACK)</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//方法接收一个函数作为累加器，数组中每个值(从左到右)开始合并，最终成为一个值(也可以自定义)</span></span><br><span class="line"><span class="keyword">var</span> arr = [ <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span> ];</span><br><span class="line"><span class="keyword">var</span> sum = arr.reduce( <span class="function"><span class="keyword">function</span>(<span class="params"> item1, item2 </span>) </span>&#123;</span><br><span class="line">  	<span class="keyword">return</span> item1 + item2;</span><br><span class="line">&#125; );</span><br><span class="line"><span class="built_in">console</span>.log( sum );   <span class="comment">//10</span></span><br><span class="line"><span class="keyword">var</span> ji = arr.reduce(<span class="function"><span class="keyword">function</span>(<span class="params"> item1, item2 </span>) </span>&#123;</span><br><span class="line">  	<span class="keyword">return</span> item1 * item2;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log( ji );   <span class="comment">//24</span></span><br></pre></td></tr></table></figure>
+<h3 id="11-arr-push-的返回值"><a href="#11-arr-push-的返回值" class="headerlink" title="11.arr.push()的返回值"></a>11.arr.push()的返回值</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//返回这个新数组的长度</span></span><br></pre></td></tr></table></figure>
+<h3 id="12-样式初始化"><a href="#12-样式初始化" class="headerlink" title="12.样式初始化"></a>12.样式初始化</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*淘宝的样式初始化代码：*/</span></span><br><span class="line"><span class="selector-tag">body</span>, <span class="selector-tag">h1</span>, <span class="selector-tag">h2</span>, <span class="selector-tag">h3</span>, <span class="selector-tag">h4</span>, <span class="selector-tag">h5</span>, <span class="selector-tag">h6</span>, <span class="selector-tag">hr</span>, <span class="selector-tag">p</span>, <span class="selector-tag">blockquote</span>, <span class="selector-tag">dl</span>, <span class="selector-tag">dt</span>, <span class="selector-tag">dd</span>, <span class="selector-tag">ul</span>, <span class="selector-tag">ol</span>, <span class="selector-tag">li</span>, <span class="selector-tag">pre</span>, <span class="selector-tag">form</span>, <span class="selector-tag">fieldset</span>, <span class="selector-tag">legend</span>, <span class="selector-tag">button</span>, <span class="selector-tag">input</span>, <span class="selector-tag">textarea</span>, <span class="selector-tag">th</span>, <span class="selector-tag">td</span> &#123; <span class="attribute">margin</span>:<span class="number">0</span>; <span class="attribute">padding</span>:<span class="number">0</span>; &#125;</span><br><span class="line"><span class="selector-tag">body</span>, <span class="selector-tag">button</span>, <span class="selector-tag">input</span>, <span class="selector-tag">select</span>, <span class="selector-tag">textarea</span> &#123; <span class="attribute">font</span>:<span class="number">12px</span>/<span class="number">1.5</span>tahoma, arial, \<span class="number">5</span>b8b\<span class="number">4</span>f53; &#125;</span><br><span class="line"><span class="selector-tag">h1</span>, <span class="selector-tag">h2</span>, <span class="selector-tag">h3</span>, <span class="selector-tag">h4</span>, <span class="selector-tag">h5</span>, <span class="selector-tag">h6</span>&#123; <span class="attribute">font-size</span>:<span class="number">100%</span>; &#125;</span><br><span class="line"><span class="selector-tag">address</span>, <span class="selector-tag">cite</span>, <span class="selector-tag">dfn</span>, <span class="selector-tag">em</span>, <span class="selector-tag">var</span> &#123; <span class="attribute">font-style</span>:normal; &#125;</span><br><span class="line"><span class="selector-tag">code</span>, <span class="selector-tag">kbd</span>, <span class="selector-tag">pre</span>, <span class="selector-tag">samp</span> &#123; <span class="attribute">font-family</span>:couriernew, courier, monospace; &#125;</span><br><span class="line"><span class="selector-tag">small</span>&#123; <span class="attribute">font-size</span>:<span class="number">12px</span>; &#125;</span><br><span class="line"><span class="selector-tag">ul</span>, <span class="selector-tag">ol</span> &#123; <span class="attribute">list-style</span>:none; &#125;</span><br><span class="line"><span class="selector-tag">a</span> &#123; <span class="attribute">text-decoration</span>:none; &#125;</span><br><span class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:hover</span> &#123; <span class="attribute">text-decoration</span>:underline; &#125;</span><br><span class="line"><span class="selector-tag">sup</span> &#123; <span class="attribute">vertical-align</span>:text-top; &#125;</span><br><span class="line"><span class="selector-tag">sub</span>&#123; <span class="attribute">vertical-align</span>:text-bottom; &#125;</span><br><span class="line"><span class="selector-tag">legend</span> &#123; <span class="attribute">color</span>:<span class="number">#000</span>; &#125;</span><br><span class="line"><span class="selector-tag">fieldset</span>, <span class="selector-tag">img</span> &#123; <span class="attribute">border</span>:<span class="number">0</span>; &#125;</span><br><span class="line"><span class="selector-tag">button</span>, <span class="selector-tag">input</span>, <span class="selector-tag">select</span>, <span class="selector-tag">textarea</span> &#123; <span class="attribute">font-size</span>:<span class="number">100%</span>; &#125;</span><br><span class="line"><span class="selector-tag">table</span> &#123; <span class="attribute">border-collapse</span>:collapse; <span class="attribute">border-spacing</span>:<span class="number">0</span>; &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="13-清除浮动"><a href="#13-清除浮动" class="headerlink" title="13.清除浮动"></a>13.清除浮动</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.clearfix</span><span class="selector-pseudo">:before</span>, <span class="selector-class">.clearfix</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">       <span class="attribute">content</span>: <span class="string">" "</span>;</span><br><span class="line">       <span class="attribute">display</span>: table;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="selector-class">.clearfix</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">       <span class="attribute">clear</span>: both;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="selector-class">.clearfix</span> &#123;</span><br><span class="line">       *zoom: 1;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="14-isArray（）"><a href="#14-isArray（）" class="headerlink" title="14.isArray（）"></a>14.isArray（）</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [ <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span> ];</span><br><span class="line"><span class="built_in">Array</span>.isArray(arr)   <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+<h3 id="15-nodeName"><a href="#15-nodeName" class="headerlink" title="15.nodeName"></a>15.nodeName</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id = <span class="string">'box'</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="built_in">document</span>.getElementById( <span class="string">'box'</span> ).nodeName    <span class="comment">//DIV</span></span><br></pre></td></tr></table></figure>
+<h3 id="16-array-filter"><a href="#16-array-filter" class="headerlink" title="16.array.filter()"></a>16.array.filter()</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [ <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span> ];</span><br><span class="line"><span class="keyword">var</span> result = arr.filter(<span class="function"><span class="keyword">function</span>(<span class="params"> item </span>)</span>&#123;</span><br><span class="line">  	<span class="keyword">return</span> item &gt; <span class="number">3</span>;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log( result );   <span class="comment">//[ 4, 5, 6 ]</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+      
+      
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2017/01/19/vue的一些总结/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">vue的一些总结</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2017/01/03/setTimeout的工作机制/">
+        <span class="next-text nav-default">setTimeout的工作机制</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:songtao_st08@163.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/youstde" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2015 - 
+    
+    2018
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">songtao</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  
+
+  
+
+
+
+    
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.10.1"></script>
+
+  </body>
+</html>

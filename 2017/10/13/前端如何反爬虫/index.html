@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="">
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="前端如何反爬虫">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="子墨">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.png?v=2.10.1">
+
+
+
+<link rel="canonical" href="http://yoursite.com/2017/10/13/前端如何反爬虫/">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.1">
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true};
+</script>
+
+    <title> 前端如何反爬虫 - 子墨 </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">子墨</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">子墨</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          前端如何反爬虫
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2017-10-13
+        </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#反击爬虫，前端工程师的脑洞可以有多大？（转载）"><span class="toc-text">反击爬虫，前端工程师的脑洞可以有多大？（转载）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-前言"><span class="toc-text">1. 前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-常见反爬虫策略"><span class="toc-text">2. 常见反爬虫策略</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#题外话：token"><span class="toc-text">题外话：token</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-前端与反爬虫"><span class="toc-text">3. 前端与反爬虫</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-FONT-FACE拼凑式"><span class="toc-text">3.1 FONT-FACE拼凑式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-BACKGROUND拼凑式"><span class="toc-text">3.2 BACKGROUND拼凑式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-字符穿插式"><span class="toc-text">3.3 字符穿插式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4-伪元素隐藏式"><span class="toc-text">3.4 伪元素隐藏式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-5-元素定位覆盖式"><span class="toc-text">3.5 元素定位覆盖式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-6-IFRAME异步加载式"><span class="toc-text">3.6 IFRAME异步加载式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-7-字符分割式"><span class="toc-text">3.7 字符分割式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-8-字符集替换式"><span class="toc-text">3.8 字符集替换式</span></a></li></ol></li></ol>
+    </div>
+  </div>
+
+
+
+    <div class="post-content">
+      
+        <h1 id="反击爬虫，前端工程师的脑洞可以有多大？（转载）"><a href="#反击爬虫，前端工程师的脑洞可以有多大？（转载）" class="headerlink" title="反击爬虫，前端工程师的脑洞可以有多大？（转载）"></a>反击爬虫，前端工程师的脑洞可以有多大？（转载）</h1><p>**2017-07-09</p>
+<p><img src="http://7tszky.com1.z0.glb.clouddn.com/FmIvXiOiFFET4oPGkVU6rdDCl87S" alt="img"></p>
+<p><em>—— 同时发表于imweb.io</em></p>
+<h3 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h3><p>对于一张网页，我们往往希望它是结构良好，内容清晰的，这样搜索引擎才能准确地认知它。<br>而反过来，又有一些情景，我们不希望内容能被轻易获取，比方说电商网站的交易额，教育网站的题目等。因为这些内容，往往是一个产品的生命线，必须做到有效地保护。这就是<strong>爬虫与反爬虫</strong>这一话题的由来。</p>
+<h3 id="2-常见反爬虫策略"><a href="#2-常见反爬虫策略" class="headerlink" title="2. 常见反爬虫策略"></a>2. 常见反爬虫策略</h3><p>但是世界上没有一个网站，能做到完美地反爬虫。</p>
+<p>如果页面希望能在用户面前正常展示，同时又不给爬虫机会，就必须要做到识别真人与机器人。因此工程师们做了各种尝试，这些策略大多采用于<strong>后端</strong>，也是目前比较常规单有效的手段，比如：</p>
+<ul>
+<li><p>User-Agent + Referer检测</p>
+</li>
+<li><p>账号及Cookie验证</p>
+<p>还有一种更加变态的服务端爬虫检测机制，就是对所有访问页面的http请求，在 <code>http response</code> 中种下一个 <code>cookie token</code> ，然后在这个页面内异步执行的一些ajax接口里去校验来访请求是否含有cookie token，将token回传回来则表明这是一个合法的浏览器来访，否则说明刚刚被下发了那个token的用户访问了页面html却没有访问html内执行js后调用的ajax请求，很有可能是一个爬虫程序。</p>
+<p>如果你不携带token直接访问一个接口，这也就意味着你没请求过html页面直接向本应由页面内ajax访问的接口发起了网络请求，这也显然证明了你是一个可疑的爬虫。知名电商网站amazon就是采用的这种防御策略。</p>
+</li>
+<li><p>验证码</p>
+</li>
+<li><p>IP限制频次</p>
+</li>
+</ul>
+<h5 id="题外话：token"><a href="#题外话：token" class="headerlink" title="题外话：token"></a>题外话：token</h5><p>token其实 是服务端针对用户生成的一个令牌，大多以cookie的形式存在客户端，用来证明用户身份的，token是个易失数据，丢了无非让用户重新登录一下，新浪微博动不动就让我重新登录，反正这事儿我是无所谓啦。 所以如果你觉得普通的数据库表撑不住了，可以放到 MSSQL/MySQL 的内存表里（不过据说mysql的内存表性能提升有限），可以放到 Memcache里（讲真，这个是挺常见的策略）</p>
+<p>而爬虫是可以无限逼近于真人的，比如：</p>
+<ul>
+<li>chrome headless或phantomjs来模拟浏览器环境</li>
+<li><a href="http://udn.yyuap.com/doc/ae/920457.html" target="_blank" rel="noopener">tesseract</a>识别验证码</li>
+<li>代理IP淘宝就能买到</li>
+</ul>
+<p>所以我们说，100%的反爬虫策略？不存在的。<br>更多的是体力活，是个难易程度的问题。</p>
+<p>不过作为前端工程师，我们可以增加一下游戏难度，设计出一些<strong>很(sang)有(xin)意(bing)思(kuang)</strong>的反爬虫策略。</p>
+<h3 id="3-前端与反爬虫"><a href="#3-前端与反爬虫" class="headerlink" title="3. 前端与反爬虫"></a>3. 前端与反爬虫</h3><h4 id="3-1-FONT-FACE拼凑式"><a href="#3-1-FONT-FACE拼凑式" class="headerlink" title="3.1 FONT-FACE拼凑式"></a>3.1 FONT-FACE拼凑式</h4><p><strong>例子：猫眼电影</strong></p>
+<p>猫眼电影里，对于票房数据，展示的并不是纯粹的数字。<br>页面使用了font-face定义了字符集，并通过unicode去映射展示。也就是说，除去图像识别，必须同时爬取字符集，才能识别出数字。</p>
+<p><img src="http://7tszky.com1.z0.glb.clouddn.com/Fr4tKHT39qEwCjjK7QlhWpHWNkvs" alt="img"></p>
+<p>并且，每次刷新页面，字符集的url都是有变化的，无疑更大难度地增加了爬取成本。</p>
+<p><img src="http://7tszky.com1.z0.glb.clouddn.com/FnBGGXcZgJ_PN9CbX5gVz_f5Y579" alt="img"></p>
+<h4 id="3-2-BACKGROUND拼凑式"><a href="#3-2-BACKGROUND拼凑式" class="headerlink" title="3.2 BACKGROUND拼凑式"></a>3.2 BACKGROUND拼凑式</h4><p><strong>例子：美团</strong></p>
+<p>与font的策略类似，美团里用到的是background拼凑。数字其实是图片，根据不同的background偏移，显示出不同的字符。</p>
+<p><img src="http://7tszky.com1.z0.glb.clouddn.com/FvAROr33mC0rpTFO46Xtl3j-8HrW" alt="img"></p>
+<p>并且不同页面，图片的字符排序也是有区别的。不过理论上只需生成0-9与小数点，为何有重复字符就不是很懂。</p>
+<p>页面A：<br><img src="http://7tszky.com1.z0.glb.clouddn.com/Fp_3RGHisGjjKoofp-W7oOx731ry" alt="img"><br>页面B：<br><img src="http://7tszky.com1.z0.glb.clouddn.com/FiuQ2nSHzD6VoM2L_LDloXUo9ndL" alt="img"></p>
+<h4 id="3-3-字符穿插式"><a href="#3-3-字符穿插式" class="headerlink" title="3.3 字符穿插式"></a>3.3 字符穿插式</h4><p><strong>例子：微信公众号文章</strong></p>
+<p>某些微信公众号的文章里，穿插了各种迷之字符，并且通过样式把这些字符隐藏掉。<br>这种方式虽然令人震惊…但其实没有太大的识别与过滤难度，甚至可以做得更好，不过也算是一种脑洞吧。<br><img src="http://7tszky.com1.z0.glb.clouddn.com/FoFF_VXDYzM0DyLDjAbOz8ATzH59" alt="img"></p>
+<p>对了，我的手机流量可以找谁报销吗？</p>
+<h4 id="3-4-伪元素隐藏式"><a href="#3-4-伪元素隐藏式" class="headerlink" title="3.4 伪元素隐藏式"></a>3.4 伪元素隐藏式</h4><p><strong>例子：汽车之家</strong></p>
+<p>汽车之家里，把关键的厂商信息，做到了伪元素的content里。<br>这也是一种思路：爬取网页，必须得解析css，需要拿到伪元素的content，这就提升了爬虫的难度。</p>
+<p><img src="http://7tszky.com1.z0.glb.clouddn.com/FslsPbUtQhM2uE_bK-LZw7NHynl5" alt="img"></p>
+<h4 id="3-5-元素定位覆盖式"><a href="#3-5-元素定位覆盖式" class="headerlink" title="3.5 元素定位覆盖式"></a>3.5 元素定位覆盖式</h4><p><strong>例子：去哪儿</strong></p>
+<p>还有热爱数学的去哪儿，对于一个4位数字的机票价格，先用四个<code>i</code>标签渲染，再用两个<code>b</code>标签去绝对定位偏移量，覆盖故意展示错误的<code>i</code>标签，最后在视觉上形成正确的价格…</p>
+<p><img src="http://7tszky.com1.z0.glb.clouddn.com/FtZdGFs-53tAYT10GS_ukosJL8CF" alt="img"></p>
+<p>这说明爬虫会解析css还不行，还得会做数学题。</p>
+<h4 id="3-6-IFRAME异步加载式"><a href="#3-6-IFRAME异步加载式" class="headerlink" title="3.6 IFRAME异步加载式"></a>3.6 IFRAME异步加载式</h4><p><strong>例子：网易云音乐</strong></p>
+<p>网易云音乐页面一打开，html源码里几乎只有一个<code>iframe</code>，并且它的src是空白的：<code>about:blank</code>。接着js开始运行，把整个页面的框架异步塞到了iframe里面…</p>
+<p><img src="http://7tszky.com1.z0.glb.clouddn.com/FjHp4gqXWu1YeYWVJ1vkMAgRzO-g" alt="img"></p>
+<p>不过这个方式带来的难度并不大，只是在异步与iframe处理上绕了个弯（或者有其他原因，不完全是基于反爬虫考虑），无论你是用selenium还是phantom，都有API可以拿到iframe里面的content信息。</p>
+<h4 id="3-7-字符分割式"><a href="#3-7-字符分割式" class="headerlink" title="3.7 字符分割式"></a>3.7 字符分割式</h4><p><strong>例子：全网代理IP</strong></p>
+<p>在一些展示代理IP信息的页面，对于IP的保护也是大费周折。</p>
+<p><img src="http://7tszky.com1.z0.glb.clouddn.com/FiY93YeoTulfbXWBxfX3nrksVQVV" alt="img"></p>
+<p>他们会先把IP的数字与符号分割成dom节点，再在中间插入迷惑人的数字，如果爬虫不知道这个策略，还会以为自己成功拿到了数值；不过如果爬虫注意到，就很好解决了。</p>
+<h4 id="3-8-字符集替换式"><a href="#3-8-字符集替换式" class="headerlink" title="3.8 字符集替换式"></a>3.8 字符集替换式</h4><p><strong>例子：去哪儿移动侧</strong></p>
+<p>同样会欺骗爬虫的还有去哪儿的移动版。</p>
+<p><img src="http://7tszky.com1.z0.glb.clouddn.com/Ft3i0NfbT8udcJ-OMIQQvdeU-LTb" alt="img"></p>
+<p>html里明明写的3211，视觉上展示的却是1233。原来他们重新定义了字符集，3与1的顺序刚好调换得来的结果…</p>
+<p><img src="http://7tszky.com1.z0.glb.clouddn.com/FoMbTu14ollkxEO0tSv7F55ZVxMq" alt="img"></p>
+<ul>
+<li><a href="javascript:void(0" target="_blank" rel="noopener">安全</a>)</li>
+<li><a href="javascript:void(0" target="_blank" rel="noopener">前端</a>)</li>
+</ul>
+
+      
+    </div>
+
+    
+      
+      
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2017/10/23/DOM事件target和currentTarget的区别/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">DOM事件target和currentTarget的区别</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2017/10/10/localStorage还能这么用/">
+        <span class="next-text nav-default">localStorage还能这么用</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:songtao_st08@163.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/youstde" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2015 - 
+    
+    2018
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">songtao</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  
+
+  
+
+
+
+    
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.10.1"></script>
+
+  </body>
+</html>

@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="">
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="Vue学习笔记-双向绑定实现原理">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="子墨">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.png?v=2.10.1">
+
+
+
+<link rel="canonical" href="http://yoursite.com/2017/03/01/Vue学习笔记-双向绑定实现原理/">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.1">
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true};
+</script>
+
+    <title> Vue学习笔记-双向绑定实现原理 - 子墨 </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">子墨</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">子墨</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Vue学习笔记-双向绑定实现原理
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2017-03-01
+        </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、实现双向绑定的做法"><span class="toc-text">一、实现双向绑定的做法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-发布者-订阅者模式（backboneJS）"><span class="toc-text">1.发布者-订阅者模式（backboneJS）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-脏值检查（angularJS）"><span class="toc-text">2.脏值检查（angularJS）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-数据劫持（VueJS）"><span class="toc-text">3.数据劫持（VueJS）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、Object-defineProperty"><span class="toc-text">二、Object.defineProperty()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、实现简单的双向绑定"><span class="toc-text">三、实现简单的双向绑定</span></a></li></ol>
+    </div>
+  </div>
+
+
+
+    <div class="post-content">
+      
+        <p>本文是转载的博文，觉得总结的挺好的，就直接搬过来了，<a href="http://www.tuicool.com/articles/MZ73i2m" target="_blank" rel="noopener"><strong>原文走这里</strong></a></p>
+<h3 id="一、实现双向绑定的做法"><a href="#一、实现双向绑定的做法" class="headerlink" title="一、实现双向绑定的做法"></a>一、实现双向绑定的做法</h3><p>前端MVVM最令人激动的就是双向绑定机制了，实现双向数据绑定的做法大致如下三种：</p>
+<h4 id="1-发布者-订阅者模式（backboneJS）"><a href="#1-发布者-订阅者模式（backboneJS）" class="headerlink" title="1.发布者-订阅者模式（backboneJS）"></a>1.发布者-订阅者模式（backboneJS）</h4><p>思路：使用自定义的data属性在HTML代码中指明绑定。所有绑定起来的JavaScript对象以及DOM元素都将“订阅”一个发布者对象。任何时候如果JavaScript对象或者一个HTML输入字段被侦测到发生了变化，我们将代理事件到发布者-订阅者模式，这会反过来讲变化广播并传播到所有绑定的对象元素。</p>
+<h4 id="2-脏值检查（angularJS）"><a href="#2-脏值检查（angularJS）" class="headerlink" title="2.脏值检查（angularJS）"></a>2.脏值检查（angularJS）</h4><p>思路：angular.js是通过脏值检测的方式比对数据是否有变更，从而来决定是否更新视图。最简单的方式就是通过setInterval()定时轮询检测数据是否发生变化，Angular只在特定的事件触发时进行脏值检测，大致如下：</p>
+<ul>
+<li>DOM事件，譬如用户输入文本，点击按钮等(ng-click)</li>
+<li>XHR响应事件($http)</li>
+<li>浏览器Location变更事件($location)</li>
+<li>Timer事件($timeout, $interval)</li>
+<li>执行$digest()或$apply()</li>
+</ul>
+<h4 id="3-数据劫持（VueJS）"><a href="#3-数据劫持（VueJS）" class="headerlink" title="3.数据劫持（VueJS）"></a>3.数据劫持（VueJS）</h4><p>思路：vue.js则是采用数据劫持结合发布者-订阅者模式的方式，通过Object.defineProperty()来劫持各个属性的setter，getter， 在数据变动时发布消息给订阅者，触发响应的监听回调。</p>
+<p>由此可见，Object.defineProperty()这个API是Vue实现双向绑定的关键，<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty" target="_blank" rel="noopener"><strong>了解更多走这里</strong></a></p>
+<h3 id="二、Object-defineProperty"><a href="#二、Object-defineProperty" class="headerlink" title="二、Object.defineProperty()"></a>二、Object.defineProperty()</h3><p>简单例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;&#125;;</span><br><span class="line"><span class="built_in">Object</span>.defineProperty(obj, <span class="string">'hello'</span>, &#123;</span><br><span class="line">    get: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'get val:'</span>+ val);</span><br><span class="line">        <span class="keyword">return</span> val;</span><br><span class="line"> 　 &#125;,</span><br><span class="line">　　set: <span class="function"><span class="keyword">function</span>(<span class="params">newVal</span>) </span>&#123;</span><br><span class="line">        val = newVal;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'set val:'</span>+ val);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line">obj.hello;</span><br><span class="line">obj.hello=<span class="string">'111'</span>;</span><br></pre></td></tr></table></figure>
+<p>结果：</p>
+<p><img src="http://ww1.sinaimg.cn/large/005QDhBjgy1fd7roq2nzqj30qo04qglq" alt=""></p>
+<p>如果去掉 obj.hello=‘111’ 这行代码，则get的返回值val会报错val is not<br>defined。可见Object.defineProperty()<br>监控对数据的操作，可以自动触发数据同步。下面我们先用Object.defineProperty()来实现一个非常简单的双向绑定。</p>
+<h3 id="三、实现简单的双向绑定"><a href="#三、实现简单的双向绑定" class="headerlink" title="三、实现简单的双向绑定"></a>三、实现简单的双向绑定</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">head</span>&gt;</span><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"app"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"a"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"b"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">   <span class="keyword">var</span> obj = &#123;&#125;;</span></span><br><span class="line"><span class="javascript">   <span class="built_in">Object</span>.defineProperty(obj, <span class="string">'hello'</span>, &#123;</span></span><br><span class="line"><span class="javascript">       get: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">           <span class="built_in">console</span>.log(<span class="string">'get val:'</span>+ val);</span></span><br><span class="line"><span class="javascript">           <span class="keyword">return</span> val;</span></span><br><span class="line"><span class="undefined">       &#125;,</span></span><br><span class="line"><span class="javascript">       set: <span class="function"><span class="keyword">function</span>(<span class="params">newVal</span>) </span>&#123;</span></span><br><span class="line"><span class="undefined">            val = newVal;</span></span><br><span class="line"><span class="javascript">            <span class="built_in">console</span>.log(<span class="string">'set val:'</span>+ val);</span></span><br><span class="line"><span class="javascript">            <span class="built_in">document</span>.getElementById(<span class="string">'a'</span>).value = val;</span></span><br><span class="line"><span class="javascript">            <span class="built_in">document</span>.getElementById(<span class="string">'b'</span>).innerHTML = val;</span></span><br><span class="line"><span class="undefined">       &#125;</span></span><br><span class="line"><span class="undefined">    &#125;);</span></span><br><span class="line"><span class="javascript">    <span class="built_in">document</span>.addEventListener(<span class="string">'keyup'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span></span><br><span class="line"><span class="undefined">      obj.hello = e.target.value;</span></span><br><span class="line"><span class="undefined">    &#125;);</span></span><br><span class="line"><span class="undefined">   </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>演示效果：</p>
+<p><img src="http://ww1.sinaimg.cn/large/005QDhBjgy1fd7rsh89gig30nm0ajte1" alt=""></p>
+
+      
+    </div>
+
+    
+      
+      
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2017/03/02/vue学习笔记-生命周期和钩子函数/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">vue学习笔记-生命周期和钩子函数</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2017/03/01/AngularJS/">
+        <span class="next-text nav-default">AngularJS</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:songtao_st08@163.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/youstde" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2015 - 
+    
+    2018
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">songtao</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  
+
+  
+
+
+
+    
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.10.1"></script>
+
+  </body>
+</html>

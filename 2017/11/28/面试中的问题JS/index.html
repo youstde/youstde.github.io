@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="">
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="面试中的问题JS">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="子墨">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.png?v=2.10.1">
+
+
+
+<link rel="canonical" href="http://yoursite.com/2017/11/28/面试中的问题JS/">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.1">
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true};
+</script>
+
+    <title> 面试中的问题JS - 子墨 </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">子墨</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">子墨</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          面试中的问题JS
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2017-11-28
+        </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#window-onload和-document-ready-的区别"><span class="toc-text">window.onload和$(document).ready()的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#WHY"><span class="toc-text">WHY</span></a></li></ol></li></ol><li class="toc-item toc-level-2"><a class="toc-link" href="#原型和原型链"><span class="toc-text">原型和原型链</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vue中data为什么是一个函数"><span class="toc-text">vue中data为什么是一个函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#es5和es6在继承方面的区别"><span class="toc-text">es5和es6在继承方面的区别</span></a></li>
+    </div>
+  </div>
+
+
+
+    <div class="post-content">
+      
+        <h2 id="window-onload和-document-ready-的区别"><a href="#window-onload和-document-ready-的区别" class="headerlink" title="window.onload和$(document).ready()的区别"></a><code>window.onload和$(document).ready()的区别</code></h2><p>1.执行时间</p>
+<ul>
+<li>window.onload会等到页面所有元素加载完成才会执行</li>
+<li>$(document).ready()是DOM结构绘制完毕后就执行</li>
+</ul>
+<p>2.编写个数不同</p>
+<ul>
+<li>window.onload不能同时编写多个，如果有多个window.onload方法，只会执行一个 </li>
+<li>$(document).ready()可以同时编写多个，并且都可以得到执行 </li>
+</ul>
+<h4 id="WHY"><a href="#WHY" class="headerlink" title="WHY"></a>WHY</h4><p>1.执行时间上：</p>
+<p>$(document).ready()监听的是<code>DOMContentLoaded</code>，所以DOM结构绘制完成后就执行</p>
+<p>2.编写个数</p>
+<p>jQuery是通过addEventListener去监听</p>
+<h2 id="原型和原型链"><a href="#原型和原型链" class="headerlink" title="原型和原型链"></a><code>原型和原型链</code></h2><p><img src="http://ww1.sinaimg.cn/large/005QDhBjgy1flxlhdjq0nj30fu0jpmyk.jpg" alt=""></p>
+<p>其实，只需要明白原型对象的结构即可：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.prototype = &#123;</span><br><span class="line">    <span class="keyword">constructor</span> : Function,</span><br><span class="line">    __proto__ : parent prototype,</span><br><span class="line">    some prototype properties: ...</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>总结：<code>函数的原型对象constructor默认指向函数本身，原型对象除了有原型属性外，为了实现继承，还有一个原型链指针__proto__，该指针指向上一层的原型对象，而上一层的原型对象的结构依然类似，这样利用__proto__一直指向Object的原型对象上，而Object的原型对象用Object.prototype.__proto__ = null表示原型链的最顶端，如此变形成了javascript的原型链继承，同时也解释了为什么所有的javascript对象都具有Object的基本方法。</code></p>
+<h2 id="vue中data为什么是一个函数"><a href="#vue中data为什么是一个函数" class="headerlink" title="vue中data为什么是一个函数"></a><code>vue中data为什么是一个函数</code></h2><p>为了解决js中对象引用传递带来的问题。如果是对象的话，一个组件的多个实例中的一个实例去改变了data，那其他几个实例的data也会发生改变，这样肯定是行不通的，所以vue将其做成一个函数，return新的对象，从而使组件的每个实例的data都是相互独立的，这其实跟vue的设计原理没有什么关系，主要是因为js本身的体质导致的。<a href="https://segmentfault.com/q/1010000008314157/a-1020000008314480" target="_blank" rel="noopener">更详细的讲解</a></p>
+<h2 id="es5和es6在继承方面的区别"><a href="#es5和es6在继承方面的区别" class="headerlink" title="es5和es6在继承方面的区别"></a><code>es5和es6在继承方面的区别</code></h2><p>Es5的继承实质上是先创建了子类的this，然后再在其上面添加弗父类的属性和方法（Parent.apply(this)）</p>
+<p>Es6的继承则完全不同，实质是先创造父类的实例对象<code>this</code>（所以必须先调用<code>super</code>方法），然后再用子类的构造函数修改<code>this</code>（子类实例的构建，是基于对父类实例加工，只有<code>super</code>方法才能返回父类实例）</p>
+
+      
+    </div>
+
+    
+      
+      
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2017/12/01/vue系列之componet的全局注册和use/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">vue系列之componet的全局注册和use</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2017/11/28/面试中的问题CSS/">
+        <span class="next-text nav-default">面试中的问题CSS</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:songtao_st08@163.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/youstde" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2015 - 
+    
+    2018
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">songtao</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  
+
+  
+
+
+
+    
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.10.1"></script>
+
+  </body>
+</html>

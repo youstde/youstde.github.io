@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="">
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="webpack至于loader的编写">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="子墨">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.png?v=2.10.1">
+
+
+
+<link rel="canonical" href="http://yoursite.com/2018/01/31/webpack至于loader的编写/">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.1">
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true};
+</script>
+
+    <title> webpack至于loader的编写 - 子墨 </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">子墨</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">子墨</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          webpack至于loader的编写
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-01-31
+        </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#写在前面"><span class="toc-text">写在前面</span></a></li></ol>
+    </div>
+  </div>
+
+
+
+    <div class="post-content">
+      
+        <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a><code>写在前面</code></h2><p>之前看过一篇不错的文章，很适合入门，<a href="https://segmentfault.com/a/1190000012718374" target="_blank" rel="noopener">传送门</a></p>
+<p>本篇文章是基于我看了一些文章后动手写的一些结合平时业务的demo</p>
+<p><a href="https://github.com/youstde/webpackDemo" target="_blank" rel="noopener">完整代码在master分支上</a></p>
+<p>####业务场景：</p>
+<p>我现在想写一个插件，这个插件在编写完成后打包只生成一个js，别人用这个插件的时候只需要将这个js引入即可，相应的布局和样式会自动渲染到页面上（简单的一个插件实现）</p>
+<p>demo目录结构如下：</p>
+<p><img src="http://ww1.sinaimg.cn/large/005QDhBjly1fnzuwox5frj30gc0em75n.jpg" alt=""></p>
+<p>从根目录开始看起，<code>index.html</code>是整个项目的容器模板（测试用），<code>index.js</code>是入口文件，同时也是插件的核心处理文件，其他就不用多说。然后<code>template</code>下面，是插件的核心模板和样式，<code>loader</code>目录下面放的就是自己写的<code>loader</code>了</p>
+<p>下面是webpack的配置：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>),</span><br><span class="line">    webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>),</span><br><span class="line">    ROOT_PATH = path.resolve(__dirname), <span class="comment">//当前项目的跟路径（绝对）</span></span><br><span class="line">    BUILD_DIR = path.resolve(ROOT_PATH, <span class="string">'build'</span>);</span><br><span class="line"><span class="keyword">var</span> HtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry: &#123;</span><br><span class="line">    <span class="string">'index'</span>: path.resolve(ROOT_PATH, <span class="string">'./index.js'</span>)</span><br><span class="line">  &#125;,</span><br><span class="line">  output: &#123;</span><br><span class="line">    path: BUILD_DIR,</span><br><span class="line">    publicPath: <span class="string">'./'</span>,</span><br><span class="line">    filename: <span class="string">'[name]/index.js'</span></span><br><span class="line">  &#125;,</span><br><span class="line">    <span class="built_in">module</span>: &#123;</span><br><span class="line">        rules: [&#123;</span><br><span class="line">            test: <span class="regexp">/\.html$/</span>,</span><br><span class="line">            use: [<span class="string">'html-loader'</span>]</span><br><span class="line">        &#125;,&#123;</span><br><span class="line">            test: <span class="regexp">/\.html$/</span>,</span><br><span class="line">            use: [&#123;</span><br><span class="line">                loader: path.resolve(<span class="string">'loader/test-html-loader.js'</span>)</span><br><span class="line">            &#125;],</span><br><span class="line">            include: [path.resolve(<span class="string">'template/'</span>)]</span><br><span class="line">        &#125;]</span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [</span><br><span class="line">      <span class="comment">//引入这个插件是为了演示用，编写这个项目的时候不需要生成HTML文件，只需要生成一个JS即可</span></span><br><span class="line">        <span class="keyword">new</span> HtmlWebpackPlugin(&#123;</span><br><span class="line">          title: <span class="string">''</span>,</span><br><span class="line">          template: path.resolve(<span class="string">'index.html'</span>),</span><br><span class="line">          filename: <span class="string">'index.html'</span>,</span><br><span class="line">          <span class="comment">//chunks这个参数告诉插件要引用entry里面的哪几个入口</span></span><br><span class="line">          chunks: [<span class="string">'index'</span>],</span><br><span class="line">          <span class="comment">//要把script插入标签里</span></span><br><span class="line">          inject: <span class="string">'body'</span></span><br><span class="line">        &#125;)</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中核心的部分是：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">            test: /\.html$/,</span><br><span class="line">            use: [&#123;</span><br><span class="line">                loader: path.resolve('loader/test-html-loader.js')</span><br><span class="line">            &#125;],</span><br><span class="line">            include: [path.resolve('template/')]</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<p>这个是我自己写的<code>loader</code>，处理的是以<code>html</code>结尾同时是在<code>template</code>目录下的文件,然后就是<code>test-html-loader</code>的具体代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> loaderUtils = require(<span class="string">'loader-utils'</span>);</span><br><span class="line"><span class="keyword">var</span> fs = require(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">module</span>.<span class="keyword">exports</span> = function (source) &#123;</span><br><span class="line">	<span class="keyword">var</span> basePath = <span class="keyword">this</span>.context;</span><br><span class="line">	<span class="keyword">var</span> cssPath = /(\_include\()+(<span class="string">'|")+(.+)+('</span>|<span class="string">")+\)/.exec(source)[3];</span></span><br><span class="line"><span class="string">	var content = fs.readFileSync(basePath +'/'+ cssPath);</span></span><br><span class="line">	var all = source.replace(/(\_include\()+('|")+(.+)+('|")+\)/, '&lt;style&gt;'+content+'&lt;/style&gt;');</span><br><span class="line">  <span class="keyword">return</span> all;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>解释一下，这个loader主要做的就是匹配<code>_include(PATH)</code>,然后拿到文件路径,读取对应文件之后替换掉<code>_include(PATH)</code>,最后返回处理后的文件，为什么要这么做，是因为我的center.html里是这样写的：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">_include("center.css")</span><br><span class="line">	<span class="tag">&lt;<span class="name">h2</span>&gt;</span>test<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">h3</span>&gt;</span>xixi<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">button</span>&gt;</span>click<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>目的就是将css打到html中，然后index.js再去以模板的形式引入：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> tpl = <span class="built_in">require</span>(<span class="string">'./template/center.html'</span>);</span><br><span class="line"><span class="keyword">var</span> parentEl = <span class="built_in">document</span>.createElement(<span class="string">'div'</span>);</span><br><span class="line">parentEl.innerHTML = tpl;</span><br><span class="line">parentEl.querySelector(<span class="string">'button'</span>).onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="number">111</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">document</span>.body.appendChild(parentEl);</span><br></pre></td></tr></table></figure>
+<p>这样，当我打包完成以后，打开index.html就可以看到</p>
+<p><img src="http://ww1.sinaimg.cn/large/005QDhBjly1fnzvmsu4cnj314o0kcjsc.jpg" alt=""></p>
+
+      
+    </div>
+
+    
+      
+      
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2018/02/08/react的日常问题小总结/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">react的日常问题小总结</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2018/01/05/前端本地调试跨域问题解决/">
+        <span class="next-text nav-default">前端本地调试跨域问题解决</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:songtao_st08@163.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/youstde" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2015 - 
+    
+    2018
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">songtao</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  
+
+  
+
+
+
+    
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.10.1"></script>
+
+  </body>
+</html>

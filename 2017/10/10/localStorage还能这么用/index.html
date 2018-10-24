@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="">
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="localStorage还能这么用">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="子墨">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.png?v=2.10.1">
+
+
+
+<link rel="canonical" href="http://yoursite.com/2017/10/10/localStorage还能这么用/">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.1">
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true};
+</script>
+
+    <title> localStorage还能这么用 - 子墨 </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">子墨</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">子墨</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          localStorage还能这么用
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2017-10-10
+        </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#localStorage-还能这么用-转载"><span class="toc-text">localStorage 还能这么用(转载)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#localStorage-的基本使用"><span class="toc-text">localStorage 的基本使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#缓存静态文件"><span class="toc-text">缓存静态文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-Loader-加载静态文件"><span class="toc-text">使用 Loader 加载静态文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#借助服务器端将静态文件-inline-化"><span class="toc-text">借助服务器端将静态文件 inline 化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#同源窗口通信"><span class="toc-text">同源窗口通信</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他"><span class="toc-text">其他</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#作为前端-DB-的存储介质"><span class="toc-text">作为前端 DB 的存储介质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#表单自动持久化"><span class="toc-text">表单自动持久化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol></li></ol>
+    </div>
+  </div>
+
+
+
+    <div class="post-content">
+      
+        <h1 id="localStorage-还能这么用-转载"><a href="#localStorage-还能这么用-转载" class="headerlink" title="localStorage 还能这么用(转载)"></a><a href="https://iammapping.com/the-other-ways-to-use-localstorage/" target="_blank" rel="noopener">localStorage 还能这么用(转载)</a></h1><p><img src="http://self-storage.b0.upaiyun.com/2017/10/09/150756387698667375.png" alt="img"></p>
+<p>HTML5中 Web Storage 的出现，主要是为了弥补使用 Cookie 作为本地存储的不足。Cookie 存储的数据量非常小，而且数据会自动携带到请求头里，但服务器端可能并不关心这些数据，所以会造成带宽的浪费。</p>
+<p>Web Storage 提供了两个存储对象：localStorage 和 sessionStorage。</p>
+<p>sessionStorage 存储的数据仅在本次会话有用，会话结束后会自动失效，而且数据仅在当前窗口有效，同一源下新窗口也访问不到其他窗口基于<br>sessionStorage 存储的数据。也是由于这些特性，导致 sessionStorage 的使用场景会比较少。</p>
+<p>localStorage 可以永久存储，而且同源下数据多窗口也能共享，。看起来很美好，但 localStorage 也有短板，绝大多数浏览器有 5M 的大小限制。但是这不足以成为大家使用 localStorage 的障碍，要知道 Cookie 只有 4K 的大小，多了一千多倍，偷着乐吧。</p>
+<h2 id="localStorage-的基本使用"><a href="#localStorage-的基本使用" class="headerlink" title="localStorage 的基本使用"></a>localStorage 的基本使用</h2><p>讲这个内容的文章网上太多了，现在再来讲有点老套了。这里就不做更多介绍了，不清楚的读者可以看<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API" target="_blank" rel="noopener">这里</a>。</p>
+<p>有两点需要注意一下。在 <code>setItem</code> 时，可能会达到大小限制，最好加上错误捕捉 <a href="https://iammapping.com/the-other-ways-to-use-localstorage/#ref-error" target="_blank" rel="noopener">1</a>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;  </span><br><span class="line">  localStorage.setItem(key, value);</span><br><span class="line">&#125; <span class="keyword">catch</span>(e) &#123;</span><br><span class="line">  <span class="keyword">if</span> (isQuotaExceeded(e)) &#123;</span><br><span class="line">    <span class="comment">// Storage full, maybe notify user or do some clean-up</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isQuotaExceeded</span>(<span class="params">e</span>) </span>&#123;  </span><br><span class="line">  <span class="keyword">var</span> quotaExceeded = <span class="literal">false</span>;</span><br><span class="line">  <span class="keyword">if</span> (e) &#123;</span><br><span class="line">    <span class="keyword">if</span> (e.code) &#123;</span><br><span class="line">      <span class="keyword">switch</span> (e.code) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">22</span>:</span><br><span class="line">          quotaExceeded = <span class="literal">true</span>;</span><br><span class="line">          <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">1014</span>:</span><br><span class="line">          <span class="comment">// Firefox</span></span><br><span class="line">          <span class="keyword">if</span> (e.name === <span class="string">'NS_ERROR_DOM_QUOTA_REACHED'</span>) &#123;</span><br><span class="line">            quotaExceeded = <span class="literal">true</span>;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (e.number === <span class="number">-2147024882</span>) &#123;</span><br><span class="line">      <span class="comment">// Internet Explorer 8</span></span><br><span class="line">      quotaExceeded = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> quotaExceeded;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>另外在存储容量快满时，会造成 <code>getItem</code> 性能急剧下降 <a href="https://iammapping.com/the-other-ways-to-use-localstorage/#ref-performance" target="_blank" rel="noopener">2</a>。</p>
+<p>我们下面看看 localStorage 有哪些脑洞大开的用法。</p>
+<h2 id="缓存静态文件"><a href="#缓存静态文件" class="headerlink" title="缓存静态文件"></a>缓存静态文件</h2><p>你不禁要问，HTTP 协议不是本来就支持缓存文件吗（之前写过一篇文章<a href="https://iammapping.com/the-http-guide-of-web-cache/" target="_blank" rel="noopener">《Web缓存之HTTP指南》</a>），为什么还要使用 localStorage 来缓存？为了可编程化，通俗一点说就是把命运握在自己手中。</p>
+<p>HTTP 协议的缓存，可以由用户浏览器清除或禁用缓存，也可以由 Web 服务器设置过期时间或不缓存。对于前端工程师，这更像是一个黑盒，想要决定文件是访问缓存还是访问远程显得有些力不从心了。</p>
+<p>使用 localStorage 控制文件缓存的方式有两种：</p>
+<ol>
+<li>使用 Loader 加载静态文件</li>
+<li>借助服务器端将静态文件 inline 化</li>
+</ol>
+<p>这两种方式一般都会提前做好缓存过期策略，通常是使用版本号来控制，下面还会细讲。否则文件新版上线，用户客户端还是旧版，这就麻烦大了，而且这类问题，还不好调试不好重现。</p>
+<h3 id="使用-Loader-加载静态文件"><a href="#使用-Loader-加载静态文件" class="headerlink" title="使用 Loader 加载静态文件"></a>使用 Loader 加载静态文件</h3><p>由于请求都是动态发出的，所以可以对请求拦截处理。大致流程如下：</p>
+<ol>
+<li>查看请求的文件 url 是否有缓存到 localStorage</li>
+</ol>
+<p>   ​</p>
+<ol>
+<li>如果没有，到第 2 大步</li>
+<li>如果有，判断文件是否过期或版本号是否匹配<ol>
+<li>过期或不匹配，到第 2 大步</li>
+<li>文件内容有效，到第 4 大步</li>
+</ol>
+</li>
+</ol>
+<ol start="2">
+<li><p>请求远程文件</p>
+</li>
+<li><p>缓存最新文件内容</p>
+</li>
+<li><p>执行文件内容</p>
+</li>
+</ol>
+<p>这个方式有个开源库：<a href="https://github.com/addyosmani/basket.js" target="_blank" rel="noopener">basket.js</a>。</p>
+<h3 id="借助服务器端将静态文件-inline-化"><a href="#借助服务器端将静态文件-inline-化" class="headerlink" title="借助服务器端将静态文件 inline 化"></a>借助服务器端将静态文件 inline 化</h3><p>这个方式比上面那种更进一步，在第一次响应时把需要放入 localStorage 的文件都内联进 html 中，后面每次响应只要文件版本没有变化，都是渲染一段从 localStorage 加载该文件的代码。这样做的好处是可以有效减少请求次数，即使是第一次。</p>
+<p>版本号不匹配（版本号可记在 Cookie 中，第一次访问没有版本号），服务端响应内容：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;  </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">script2ls</span>(<span class="params">id</span>) </span>&#123;  </span><br><span class="line">  <span class="keyword">var</span> script = <span class="built_in">document</span>.getElementById(id);</span><br><span class="line">  <span class="keyword">if</span> (script) &#123;</span><br><span class="line">    localStorage[id] = script.innerHTML;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">&lt;script id="jquery.js"&gt;...jquery source code...&lt;/</span>script&gt;  </span><br><span class="line">&lt;script&gt;script2ls(<span class="string">'jquery.js'</span>)&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+<p>版本号匹配，服务端响应内容：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;  </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ls2script</span>(<span class="params">id</span>) </span>&#123;  </span><br><span class="line">  <span class="keyword">var</span> script = <span class="built_in">document</span>.createElement(<span class="string">'script'</span>);</span><br><span class="line">  script.text = localStorage[id];</span><br><span class="line">  <span class="built_in">document</span>.head.appendChild(script);</span><br><span class="line">&#125;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">&lt;script&gt;ls2script('jquery.js')&lt;/</span>script&gt;</span><br></pre></td></tr></table></figure>
+<p>不过使用 localStorage 缓存文件会有 XSS 的风险，而且造成的伤害可能是永久的 <a href="https://iammapping.com/the-other-ways-to-use-localstorage/#ref-xss" target="_blank" rel="noopener">3</a>。</p>
+<h2 id="同源窗口通信"><a href="#同源窗口通信" class="headerlink" title="同源窗口通信"></a>同源窗口通信</h2><p>你可能不禁又要问，不是有 postMessage 吗？没错 postMessage 确实可以用于窗口或 iframe 间通信，但是前提是你必须拿到打开新窗或 iframe 的句柄对象：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> popup = <span class="built_in">window</span>.open(...popup details...);  </span><br><span class="line">popup.postMessage(<span class="string">"hello there!"</span>, <span class="string">"http://example.com"</span>);</span><br></pre></td></tr></table></figure>
+<p>这样在新窗中再打开新窗，似乎就不好传递消息了。</p>
+<p>你可能还想问，为什么要在窗口间通信？好问题，没有应用场景的技术都是耍流氓。像多窗口共用的一些组件，而且对数据实时同步都有较高要求的都会是这个技术的应用场景。比如通知中心上面的未读数量，两个窗口，A 窗口更新为 8，切到 B 窗口还是 9，这就造成了体验不一致，这个例子可能还觉得无关痛痒；再比如购物车，两个产品窗口，A 窗口添加到购物车，切到 B 窗口添加到购物车，发现没有 A 添加的产品，这样就比较严重了。这当然也可以通过每个窗口都与后台建立连接来更新，但用户如果开十几个窗口就开销大了。</p>
+<p>有了同源窗口通信，我们就可以只有一个窗口与后台建立连接，收到更新后，广播给其他窗口就可以。说了这么多，实现原理是怎样的呢？</p>
+<p><img src="http://self-storage.b0.upaiyun.com/2017/10/09/150756219537917384.png" alt="storage event"></p>
+<p>其实原理也简单，每次 localStorage 中有任何变动都会触发一个 <code>storage</code> 事件，所有窗口都监听这个事件，一旦有窗口更新 localStorage，其他窗口都会收到通知，根据事件中的 <code>key</code> 把不关心的变动过滤掉。原理是很简单，但是要实现一套完整的广播机制还是有些复杂，你需要：</p>
+<ul>
+<li>管理好每个窗口的唯一 ID</li>
+<li>防止消息重复</li>
+<li>防止消息发给不关心的窗口</li>
+<li>窗口心跳 keep alive</li>
+<li>主窗口选举</li>
+<li>…</li>
+</ul>
+<p>不用担心，已经有了不错的开源实现：<a href="https://github.com/diy/intercom.js" target="_blank" rel="noopener">diy/intercom.js</a>、<a href="https://github.com/tejacques/crosstab" target="_blank" rel="noopener">tejacques/crosstab</a></p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="作为前端-DB-的存储介质"><a href="#作为前端-DB-的存储介质" class="headerlink" title="作为前端 DB 的存储介质"></a>作为前端 DB 的存储介质</h3><p>你可能不满足于用键值对保存数据，你还想保存更复杂的数据结构。</p>
+<p>灵活存取 json 格式的数据：<a href="https://github.com/typicode/lowdb#install" target="_blank" rel="noopener">typicode/lowdb</a></p>
+<p>通过 sql 对数据 CURD 操作：<a href="https://github.com/agershun/alasql#localstorage-and-dom-storage" target="_blank" rel="noopener">agershun/alasql</a></p>
+<h3 id="表单自动持久化"><a href="#表单自动持久化" class="headerlink" title="表单自动持久化"></a>表单自动持久化</h3><p>在填写表单时，遇到浏览器奔溃或者误操作导致填写内容丢失，此刻用户的内心也应该是奔溃的。误操作还可以加一个 <code>beforeunload</code> 事件，在关闭浏览器或跳出当前页前提醒一下用户。那浏览器崩溃呢，将数据变更实时保存到后台，这样似乎开销很大，实时保存到 localStorage 是个不错的解决方案，真巧，也有一个开源实现：<a href="https://github.com/simsalabim/sisyphus" target="_blank" rel="noopener">simsalabim/sisyphus</a></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>文件缓存现在有更好的解决方案，没错，说的就是 Service Worker 的 <a href="https://developer.mozilla.org/en-US/docs/Web/API/CacheStorage" target="_blank" rel="noopener">CacheStorage</a>。</p>
+<p>不过多了解一些脑洞大开的想法，有利于拓展解决问题的思路。</p>
+<p>Enjoy open source ❤️</p>
+<p>参考：<br>1：<a href="http://crocodillon.com/blog/always-catch-localstorage-security-and-quota-exceeded-errors" target="_blank" rel="noopener">Always catch LocalStorage security and quota exceeded errors</a><br>2：<a href="http://www.stevesouders.com/blog/2014/02/11/measuring-localstorage-performance/" target="_blank" rel="noopener">Measuring localStorage Performance</a><br>3：<a href="https://imququ.com/post/enhance-security-for-ls-code.html" target="_blank" rel="noopener">使用 SRI 增强 localStorage 代码安全</a></p>
+
+      
+    </div>
+
+    
+      
+      
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2017/10/13/前端如何反爬虫/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">前端如何反爬虫</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2017/09/30/浏览器的日常生活/">
+        <span class="next-text nav-default">浏览器的日常生活</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:songtao_st08@163.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/youstde" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2015 - 
+    
+    2018
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">songtao</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  
+
+  
+
+
+
+    
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.10.1"></script>
+
+  </body>
+</html>

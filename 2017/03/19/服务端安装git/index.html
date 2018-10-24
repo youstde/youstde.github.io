@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="">
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="服务端安装git">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="子墨">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.png?v=2.10.1">
+
+
+
+<link rel="canonical" href="http://yoursite.com/2017/03/19/服务端安装git/">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.1">
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true};
+</script>
+
+    <title> 服务端安装git - 子墨 </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">子墨</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">子墨</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          服务端安装git
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2017-03-19
+        </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-首先先更新系统"><span class="toc-text">(1)首先先更新系统</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-安装依赖的包"><span class="toc-text">(2)安装依赖的包</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-下载git源码并解压缩"><span class="toc-text">(3)下载git源码并解压缩</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-编译安装"><span class="toc-text">(4)编译安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-此时你如果使用git-–version-查看git版本的话，发现git仍然是1-7-1版本。这是因为它默认使用了”-usr-bin”下的git。"><span class="toc-text">(5)此时你如果使用git –version 查看git版本的话，发现git仍然是1.7.1版本。这是因为它默认使用了”/usr/bin”下的git。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-我们要把编译安装的git路径放到环境变量里，让它替换”-usr-bin”下的git。为此我们可以修改“-etc-profile”文件（或者-etc-bashrc文件）。"><span class="toc-text">(6)我们要把编译安装的git路径放到环境变量里，让它替换”/usr/bin”下的git。为此我们可以修改“/etc/profile”文件（或者/etc/bashrc文件）。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-使用source命令应用修改。"><span class="toc-text">(7)使用source命令应用修改。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8-然后再次使用git-–version-查看git版本，发现输出2-3-0，表明安装成功。"><span class="toc-text">(8)然后再次使用git –version 查看git版本，发现输出2.3.0，表明安装成功。</span></a></li></ol>
+    </div>
+  </div>
+
+
+
+    <div class="post-content">
+      
+        <h4 id="1-首先先更新系统"><a href="#1-首先先更新系统" class="headerlink" title="(1)首先先更新系统"></a>(1)首先先更新系统</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum update</span><br></pre></td></tr></table></figure>
+<h4 id="2-安装依赖的包"><a href="#2-安装依赖的包" class="headerlink" title="(2)安装依赖的包"></a>(2)安装依赖的包</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install curl-devel expat-devel gettext-devel openssl-devel zlib-devel gcc perl-ExtUtils-MakeMaker</span><br></pre></td></tr></table></figure>
+<h4 id="3-下载git源码并解压缩"><a href="#3-下载git源码并解压缩" class="headerlink" title="(3)下载git源码并解压缩"></a>(3)下载git源码并解压缩</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ wget https://github.com/git/git/archive/v2.3.0.zip</span><br><span class="line"></span><br><span class="line">$ unzip v2.3.0.zip</span><br><span class="line"></span><br><span class="line">$ cd git-2.3.0</span><br></pre></td></tr></table></figure>
+<h4 id="4-编译安装"><a href="#4-编译安装" class="headerlink" title="(4)编译安装"></a>(4)编译安装</h4><p>将其安装在“/usr/local/git”目录下。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">make prefix=/usr/local/git all</span><br><span class="line"></span><br><span class="line">sudo make prefix=/usr/local/git install</span><br></pre></td></tr></table></figure>
+<h4 id="5-此时你如果使用git-–version-查看git版本的话，发现git仍然是1-7-1版本。这是因为它默认使用了”-usr-bin”下的git。"><a href="#5-此时你如果使用git-–version-查看git版本的话，发现git仍然是1-7-1版本。这是因为它默认使用了”-usr-bin”下的git。" class="headerlink" title="(5)此时你如果使用git –version 查看git版本的话，发现git仍然是1.7.1版本。这是因为它默认使用了”/usr/bin”下的git。"></a>(5)此时你如果使用git –version 查看git版本的话，发现git仍然是1.7.1版本。这是因为它默认使用了”/usr/bin”下的git。</h4><p>你可以用下面的命令查看git所在的路径：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ whereis git</span><br><span class="line"></span><br><span class="line">git: /usr/bin/git /usr/local/git /usr/share/man/man1/git.1.gz</span><br></pre></td></tr></table></figure>
+<h4 id="6-我们要把编译安装的git路径放到环境变量里，让它替换”-usr-bin”下的git。为此我们可以修改“-etc-profile”文件（或者-etc-bashrc文件）。"><a href="#6-我们要把编译安装的git路径放到环境变量里，让它替换”-usr-bin”下的git。为此我们可以修改“-etc-profile”文件（或者-etc-bashrc文件）。" class="headerlink" title="(6)我们要把编译安装的git路径放到环境变量里，让它替换”/usr/bin”下的git。为此我们可以修改“/etc/profile”文件（或者/etc/bashrc文件）。"></a>(6)我们要把编译安装的git路径放到环境变量里，让它替换”/usr/bin”下的git。为此我们可以修改“/etc/profile”文件（或者/etc/bashrc文件）。</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/profile</span><br></pre></td></tr></table></figure>
+<p>然后在文件的最后一行，添加下面的内容，然后保存退出。<br>export PATH=/usr/local/git/bin:$PATH</p>
+<h4 id="7-使用source命令应用修改。"><a href="#7-使用source命令应用修改。" class="headerlink" title="(7)使用source命令应用修改。"></a>(7)使用source命令应用修改。</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure>
+<h4 id="8-然后再次使用git-–version-查看git版本，发现输出2-3-0，表明安装成功。"><a href="#8-然后再次使用git-–version-查看git版本，发现输出2-3-0，表明安装成功。" class="headerlink" title="(8)然后再次使用git –version 查看git版本，发现输出2.3.0，表明安装成功。"></a>(8)然后再次使用git –version 查看git版本，发现输出2.3.0，表明安装成功。</h4>
+      
+    </div>
+
+    
+      
+      
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2017/03/28/利用userAgent判断系统类型（PC端和移动端/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">利用userAgent判断系统类型（PC端和移动端</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2017/03/16/js学习笔记-cookie的设置/">
+        <span class="next-text nav-default">js学习笔记-cookie的设置</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:songtao_st08@163.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/youstde" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2015 - 
+    
+    2018
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">songtao</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  
+
+  
+
+
+
+    
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.10.1"></script>
+
+  </body>
+</html>

@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="">
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="DOM事件target和currentTarget的区别">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="子墨">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.png?v=2.10.1">
+
+
+
+<link rel="canonical" href="http://yoursite.com/2017/10/23/DOM事件target和currentTarget的区别/">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.1">
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true};
+</script>
+
+    <title> DOM事件target和currentTarget的区别 - 子墨 </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">子墨</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">子墨</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          DOM事件target和currentTarget的区别
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2017-10-23
+        </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#事件，就是文档或浏览器窗口发生的一些特定交互的瞬间。"><span class="toc-text">事件，就是文档或浏览器窗口发生的一些特定交互的瞬间。</span></a></li></ol>
+    </div>
+  </div>
+
+
+
+    <div class="post-content">
+      
+        <h4 id="事件，就是文档或浏览器窗口发生的一些特定交互的瞬间。"><a href="#事件，就是文档或浏览器窗口发生的一些特定交互的瞬间。" class="headerlink" title="事件，就是文档或浏览器窗口发生的一些特定交互的瞬间。"></a>事件，就是文档或浏览器窗口发生的一些特定交互的瞬间。</h4><p>这次先来说说事件对象。在触发DOM上的某个事件时，会产生一个事件对象event,这个对象中包含着所有与事件有关的信息。<br>所有的浏览器都支持event对象，但是支持的方式不同。那事件对象怎么得到呢:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> oBtn = <span class="built_in">document</span>.querySelector(<span class="string">'myBtn'</span>);</span><br><span class="line">oBtn.onclick = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(event);</span><br><span class="line">&#125;</span><br><span class="line">oBtn.addEventListener(<span class="string">"click"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(event);</span><br><span class="line">&#125;,<span class="literal">false</span>)</span><br></pre></td></tr></table></figure>
+<p>很简单是吧，在触发特定事件的时候，这个变量event保存的就是event对象</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=<span class="string">"button"</span> onclick=<span class="string">"alert(event)"</span>/&gt;</span><br></pre></td></tr></table></figure>
+<p>这样使用也是一样的，可以获取到event对象。<br>不同的触发事件会有不同的属性和方法,当然，所有的事件都会有一些相同的属性和方法，这里就不一一列举了，有兴趣的同学可以看看高级程序设计这本书的事件这一章。</p>
+<p>这里列举几个常用的，currentTarget与target,这两个属性看上去挺相似的，书上对这两个属性的解释是<br>currentTarget（其事件处理程序当前正在处理事件的那个元素），target(事件的目标)。通过自己写的demo,我对这两个属性的理解是，currentTarget(你绑定事件的那个元素), target(触发事件的那个目标)</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"> &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"box"</span>&gt;</span><br><span class="line">      &lt;input type=<span class="string">"button"</span> value=<span class="string">"点我"</span>&gt;</span><br><span class="line">&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/js部分</span></span><br><span class="line"><span class="regexp">var oBox = document.querySelector('.box');</span></span><br><span class="line"><span class="regexp">var oBtn = document.querySelector('input');</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">oBtn.onclick=function(event)&#123;</span></span><br><span class="line"><span class="regexp">     console.log(this);    /</span><span class="regexp">/button</span></span><br><span class="line"><span class="regexp">     console.log(event.target);    /</span><span class="regexp">/button</span></span><br><span class="line"><span class="regexp">     console.log(event.currentTarget);    /</span><span class="regexp">/button</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">oBox.onclick=function(event)&#123;</span></span><br><span class="line"><span class="regexp">     console.log(this);    /</span><span class="regexp">/div</span></span><br><span class="line"><span class="regexp">     console.log(event.target);    /</span><span class="regexp">/button</span></span><br><span class="line"><span class="regexp">     console.log(event.currentTarget);    /</span><span class="regexp">/div</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>通过demo可以看出 this始终等于currentTarget,也就是注册事件处理程序的元素，target就是触发事件的实际目标。</p>
+<p>点击button的时候由于事件处理程序注册于button之上，所以处理事件的目标也是button。<br>如果只是在div上注册点击事件处理程序，虽然事件是由button出发的，但是它本身并没有注册这个事件处理程序，所以会向上冒泡，找到div元素。</p>
+<p>说道事件冒泡，顺带说一下事件代理，</p>
+<p>现在有个场景，一个ul下面有100个li标签，现在给每个li标签绑定相同事件，该怎么去做。</p>
+<p>有人会说，循环遍历，这个很强，但是很傻，如果是1000个呢，还是遍历吗</p>
+<p>所以现在就需要使用事件代理，</p>
+<p>方法就是给所有的li标签的父元素（也就是ul）绑定一个事件，然后通过event的target去找到触发事件的那个li</p>
+
+      
+    </div>
+
+    
+      
+      
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2017/10/23/getBoundingClientRect获取的top和offsetTop获取的top区别/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">getBoundingClientRect获取的top和offsetTop获取的top区别</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2017/10/13/前端如何反爬虫/">
+        <span class="next-text nav-default">前端如何反爬虫</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:songtao_st08@163.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/youstde" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2015 - 
+    
+    2018
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">songtao</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  
+
+  
+
+
+
+    
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.10.1"></script>
+
+  </body>
+</html>

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="">
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="资源预加载">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="子墨">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.png?v=2.10.1">
+
+
+
+<link rel="canonical" href="http://yoursite.com/2017/11/24/关于Preload/">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.1">
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true};
+</script>
+
+    <title> 资源预加载 - 子墨 </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">子墨</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">子墨</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          资源预加载
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2017-11-24
+        </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#lt-link-rel-“prefetch”-gt"><span class="toc-text">&lt;link rel=“prefetch”&gt;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#lt-link-rel-“subresource”-gt"><span class="toc-text">&lt;link rel=“subresource”&gt;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#lt-link-rel-“preload”-gt"><span class="toc-text">&lt;link rel=“preload”&gt;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#响应式加载"><span class="toc-text">响应式加载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP-头"><span class="toc-text">HTTP 头</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#特征检查-（Feature-Detection）"><span class="toc-text">特征检查 （Feature Detection）</span></a></li></ol>
+    </div>
+  </div>
+
+
+
+    <div class="post-content">
+      
+        <p><a href="http://www.jianshu.com/p/24ffa6d45087" target="_blank" rel="noopener">原文请走这里</a></p>
+<p>前言：关于资源预加载，其实民间有很多种方式，有自己实现的，也有浏览器自带的，今天我只说一下浏览器自带 的几种方式</p>
+<p><code>prefetch</code> <code>subresource</code> <code>Preload</code></p>
+<p>其中prefetch和subresource是之前就已经出现的，Preload是个新鲜的东西，也是最近刷博客看到的，觉得不错就转载一下</p>
+<p>####区别</p>
+<p>事实上，关于预加载，我们已经有了<code>&lt;link rel=“prefetch”&gt;</code>,而且浏览器兼容性表现也不错<img src="http://ww1.sinaimg.cn/large/005QDhBjgy1flsyjwmbu6j30h508kjrr.jpg" alt=""></p>
+<p>除此之外，Chrome还支持过<code>&lt;link rel=“subresource”&gt;</code>。</p>
+<p>而Preload的存在的意义在于，他跟现在已经壮烈牺牲的subresource很像，同时又没有subresource的缺点。</p>
+<h2 id="lt-link-rel-“prefetch”-gt"><a href="#lt-link-rel-“prefetch”-gt" class="headerlink" title="&lt;link rel=“prefetch”&gt;"></a><code>&lt;link rel=“prefetch”&gt;</code></h2><p>是加载下一个页面可能用到的资源，并不是针对于当前页。因此该方法的加载优先级非常低自然，相比当前页面所需的资源，未来可能会用到的资源就没那么重要了），也就是说该方式的作用是加速下一个页面的加载速度。</p>
+<h2 id="lt-link-rel-“subresource”-gt"><a href="#lt-link-rel-“subresource”-gt" class="headerlink" title="&lt;link rel=“subresource”&gt;"></a><code>&lt;link rel=“subresource”&gt;</code></h2><p>的设计初衷是处理当前页面，但最后还是壮烈牺牲了。因为开发者无法控制资源的加载优先级，因此浏览器（其实也只有 Chrome 和基于 Chrome 的浏览器）在处理此类标签时，优先级很低，到底有多低呢？这么说吧，在大多数情况下，用了等于没用。</p>
+<h2 id="lt-link-rel-“preload”-gt"><a href="#lt-link-rel-“preload”-gt" class="headerlink" title="&lt;link rel=“preload”&gt;"></a><code>&lt;link rel=“preload”&gt;</code></h2><p>Preload是为处理当前页面所生，这点和 subresource 一样，但他们之间有着细微且意义重大的区别。Preload 有 as 属性，这让浏览器可做一些 subresource 和 prefetch 无法实现的事：</p>
+<ul>
+<li>浏览器可以设置正确的资源加载优先级，这种方式可以确保资源根据其重要性依次加载， 所以，Preload既不会影响重要资源的加载，又不会让次要资源影响自身的加载。</li>
+<li>浏览器可以确保请求是符合内容安全策略的，比如，如果我们的安全策略是Content-Security-Policy: script-src ‘self’，只允许浏览器执行自家服务器的脚本，as 值为 script 的外部服务器资源就不会被加载。</li>
+<li>浏览器能根据 as 的值发送适当的 Accept 头部信息</li>
+<li>浏览器通过 as 值能得知资源类型，因此当获取的资源相同时，浏览器能够判断前面获取的资源是否能重用。</li>
+</ul>
+<p>Preload 的与众不同还体现在 onload 事件上（至少在 Chrome 中，prefetch 和 subresource 是不支持的）。也就是说你可以定义资源加载完毕后的回调函数。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"preload"</span> <span class="attr">href</span>=<span class="string">"..."</span> <span class="attr">as</span>=<span class="string">"..."</span> <span class="attr">onload</span>=<span class="string">"preloadFinished()"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>例:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"preload"</span> <span class="attr">href</span>=<span class="string">"late_discovered_thing.js"</span> <span class="attr">as</span>=<span class="string">"script"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>as 属性的作用是告诉浏览器被加载的是什么资源，可能的 as 值包括：</p>
+<ul>
+<li>“script”</li>
+<li>“style”</li>
+<li>“image”</li>
+<li>“media”</li>
+<li>“document”</li>
+</ul>
+<p>忽略 as 属性，或者错误的 as 属性会使 preload 等同于 XHR 请求，浏览器不知道加载的是什么，因此会赋予此类资源非常低的加载优先级。</p>
+<h2 id="响应式加载"><a href="#响应式加载" class="headerlink" title="响应式加载"></a>响应式加载</h2><p>preload 是一个link，根据规范有一个media 属性（现在 Chrome 还不支持，不过快了），该属性使得选择性加载成为可能。</p>
+<p>有什么用处呢？假设你的站点同时支持桌面和移动端的访问，在使用桌面浏览器访问时，你希望呈现一张可交互的大地图，而在移动端，一张较小的静态地图就足够了。</p>
+<p>你肯定不想同时加载两个资源，现在常见的做法是通过 JS 判断当前浏览器类型动态地加载资源，但这样一来，浏览器的预加载器就无法及时发现他们，可能耽误加载时机，影响用户体验和 SpeedIndex 评分。</p>
+<p>怎样才能让浏览器尽可能早的发现这些资源呢？还是 Preload!</p>
+<p>通过 Preload，我们可以提前加载资源，利用 media 属性，浏览器只会加载需要的资源。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;link rel=&quot;preload&quot; as=&quot;image&quot; href=&quot;map.png&quot; media=&quot;(max-width: 600px)&quot;&gt;</span><br><span class="line">&lt;link rel=&quot;preload&quot; as=&quot;script&quot; href=&quot;map.js&quot; media=&quot;(min-width: 601px)&quot;&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="HTTP-头"><a href="#HTTP-头" class="headerlink" title="HTTP 头"></a>HTTP 头</h2><p>Preload 还有一个特性是其可以通过 HTTP 头信息被呈现。也就是说上文中大多数的基于标记语言的声明可以通过 HTTP 响应头实现。（唯一的例外是有 onload 事件的例子，我们不可能在 HTTP 头信息中定义事件处理函数。）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Link: &lt;thing_to_load.js&gt;;rel=&quot;preload&quot;;as=&quot;script&quot;</span><br><span class="line">Link: &lt;thing_to_load.woff2&gt;;rel=&quot;preload&quot;;as=&quot;font&quot;;crossorigin</span><br></pre></td></tr></table></figure>
+<p>这一方式在有些场景尤其有用，比如，当负责优化的人员与页面开发人员不是同一人时（也就是说优化人员可能无法或者不想修改页面代码），还有一个杰出的例子是外部优化引擎（External optimization engine），该引擎对内容进行扫描并优化。</p>
+<h2 id="特征检查-（Feature-Detection）"><a href="#特征检查-（Feature-Detection）" class="headerlink" title="特征检查 （Feature Detection）"></a>特征检查 （Feature Detection）</h2><p>前面所有的列子都基于一种假设——浏览器一定程度上支持 preload，至少实现了脚本和样式加载等基本功能。但如果这个假设不成立了。一切都将是然并卵。</p>
+<p>为了判断浏览器是否支持 preload，我们修改了 DOM 的规范从而能够获知 rel 支持那些值（是否支持 rel=‘preload’）。</p>
+<p>至于如何进行检查，原文中没有，但 Github有一段代码可供参考。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> DOMTokenListSupports = <span class="function"><span class="keyword">function</span>(<span class="params">tokenList, token</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!tokenList || !tokenList.supports) &#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> tokenList.supports(token);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">    <span class="keyword">if</span> (e <span class="keyword">instanceof</span> <span class="built_in">TypeError</span>) &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">"The DOMTokenList doesn't have a supported tokens list"</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.error(<span class="string">"That shouldn't have happened"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> linkSupportsPreload = DOMTokenListSupports(<span class="built_in">document</span>.createElement(<span class="string">"link"</span>).relList, <span class="string">"preload"</span>);</span><br><span class="line"><span class="keyword">if</span> (!linkSupportsPreload) &#123;</span><br><span class="line">  <span class="comment">// Dynamically load the things that relied on preload.</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+      
+      
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2017/11/28/面试中的问题CSS/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">面试中的问题CSS</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2017/11/22/本地Nginx配置/">
+        <span class="next-text nav-default">本地Nginx配置</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:songtao_st08@163.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/youstde" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2015 - 
+    
+    2018
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">songtao</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  
+
+  
+
+
+
+    
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.10.1"></script>
+
+  </body>
+</html>
