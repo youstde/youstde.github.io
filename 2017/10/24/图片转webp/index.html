@@ -186,7 +186,7 @@
   <div class="post-toc" id="post-toc">
     <h2 class="post-toc-title">文章目录</h2>
     <div class="post-toc-content">
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#图片成webp格式"><span class="toc-text">图片成webp格式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-前提"><span class="toc-text">1.前提</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-怎么做"><span class="toc-text">2.怎么做</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-带来什么效果"><span class="toc-text">3.带来什么效果</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#图片成webp格式"><span class="toc-text">图片成webp格式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-前提"><span class="toc-text">1.前提</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-怎么做"><span class="toc-text">2.怎么做</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-带来什么效果"><span class="toc-text">3.带来什么效果</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#问题"><span class="toc-text">问题</span></a></li></ol></li></ol>
     </div>
   </div>
 
@@ -211,6 +211,16 @@
 <p>1.图片体积会减少将近80%</p>
 <p>2.请求时间也会减少将近80%</p>
 <p>3.图片不会失真</p>
+<h4 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h4><p>原图：<a href="http://batchtest.oss-cn-hangzhou.aliyuncs.com/example3.png" target="_blank" rel="noopener">http://batchtest.oss-cn-hangzhou.aliyuncs.com/example3.png</a></p>
+<p>处理之后：<a href="http://batchtest.oss-cn-hangzhou.aliyuncs.com/example3.png?x-oss-process=image/format,webp" target="_blank" rel="noopener">http://batchtest.oss-cn-hangzhou.aliyuncs.com/example3.png?x-oss-process=image/format,webp</a></p>
+<p>这里的示例是一个PNG转WEBP，原图大小为760字节，处理之后变成了1.3K。</p>
+<p>首先还是使用identify工具查看两者的差别。</p>
+<p>这是原图的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Format: PNG (Portable Network Graphics)</span><br><span class="line">Mime type: image/png</span><br><span class="line">Class: DirectClass</span><br><span class="line">Geometry: 92x34+0+0</span><br><span class="line">Units: Undefined</span><br><span class="line">Type: GrayscaleAlpha</span><br><span class="line">Endianess: Undefined</span><br><span class="line">Colorspace: sRGB</span><br><span class="line">Depth: 8-bit</span><br><span class="line">Channel depth:</span><br><span class="line">  gray: 8-bit</span><br><span class="line">  alpha: 8-bit</span><br></pre></td></tr></table></figure>
+<p>这是处理之后的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Format: PAM (Common 2-dimensional bitmap format)</span><br><span class="line">Mime type: image/x-portable-pixmap</span><br><span class="line">Class: DirectClass</span><br><span class="line">Geometry: 92x34+0+0</span><br><span class="line">Units: Undefined</span><br><span class="line">Type: PaletteAlpha</span><br><span class="line">Base type: TrueColor</span><br><span class="line">Endianess: Undefined</span><br><span class="line">Colorspace: sRGB</span><br><span class="line">Depth: 8-bit</span><br><span class="line">Channel depth:</span><br><span class="line">  red: 8-bit</span><br><span class="line">  green: 8-bit</span><br><span class="line">  blue: 8-bit</span><br><span class="line">  alpha: 8-bit</span><br></pre></td></tr></table></figure>
+<p>这里可以看出一个非常明显的区别，原图是灰度图带上了透明通道，而处理之后的图片是RGB再带上透明通道。</p>
+<p>原因是Webp并不支持灰度图带上透明通道这种类型，带上透明通道就将格式固定成了RGBA格式。因此导致了要保存的数据变大。</p>
 
       
     </div>
