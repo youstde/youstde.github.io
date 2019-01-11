@@ -186,8 +186,8 @@
   <div class="post-toc" id="post-toc">
     <h2 class="post-toc-title">文章目录</h2>
     <div class="post-toc-content">
-      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#准备"><span class="toc-text">准备</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#calc"><span class="toc-text">calc()</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#vh"><span class="toc-text">vh</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#JS实现形式"><span class="toc-text">JS实现形式</span></a></li></ol>
-    </div>
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#准备"><span class="toc-text">准备</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#calc"><span class="toc-text">calc()</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#vh"><span class="toc-text">vh</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#JS实现形式"><span class="toc-text">JS实现形式</span></a></li></ol><li class="toc-item toc-level-2"><a class="toc-link" href="#candy-拓展"><span class="toc-text">:candy:拓展</span></a>
+    </li></div>
   </div>
 
 
@@ -232,8 +232,7 @@
 <p>首先，为了实现进度提示条的功能得用到<code>线性渐变</code></p>
 <p><a href="https://juejin.im/post/5c35953ce51d45523f04b6d2?utm_source=gold_browser_extension" target="_blank" rel="noopener">原文地址</a></p>
 <p><a href="https://codepen.io/youstde/pen/PXyaYQ" target="_blank" rel="noopener">demo</a></p>
-<p>:candy: 拓展</p>
-<p><strong>1、要获取当前页面的滚动条的纵坐标的位置，应该用：</strong>​      </p>
+<h2 id="candy-拓展"><a href="#candy-拓展" class="headerlink" title=":candy:拓展"></a>:candy:拓展</h2><p><strong>1、要获取当前页面的滚动条的纵坐标的位置，应该用：</strong>​      </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">document.documentElement.scrollTop</span><br></pre></td></tr></table></figure>
 <p>之所以不用document.body.scrollTop的原因是documentElement对应的是html标签,而body对应的是body标签</p>
 <p><strong>2、关于document.body和document.documentElement的区别</strong></p>
