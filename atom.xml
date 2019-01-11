@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-11-13T06:25:04.736Z</updated>
+  <updated>2019-01-11T08:32:03.151Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>CSS学习笔记-实现滚动进度条效果</title>
+    <link href="http://yoursite.com/2019/01/11/CSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%AE%9E%E7%8E%B0%E6%BB%9A%E5%8A%A8%E8%BF%9B%E5%BA%A6%E6%9D%A1%E6%95%88%E6%9E%9C/"/>
+    <id>http://yoursite.com/2019/01/11/CSS学习笔记-实现滚动进度条效果/</id>
+    <published>2019-01-11T07:03:45.000Z</published>
+    <updated>2019-01-11T08:32:03.151Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="fallen-leaf-准备"><a href="#fallen-leaf-准备" class="headerlink" title=":fallen_leaf:准备"></a>:fallen_leaf:准备</h4><p>在切入正题之前，先看两个与之相关的知识点：</p><h5 id="candy-calc"><a href="#candy-calc" class="headerlink" title=":candy: calc()"></a>:candy: calc()</h5><blockquote><p>用于动态计算长度值</p><p>支持的版本：css3</p></blockquote><p>需要注意的是：</p><ul><li><p>运算符前后都要保留一个空格，例如：</p><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">width</span>: <span class="selector-tag">calc</span>(100% <span class="selector-tag">-</span> 10<span class="selector-tag">px</span>);</span><br></pre></td></tr></table></figure></li><li><p>任何长度都可以使用calc()函数进行计算</p></li><li><p>calc()支持“+”，“-”，“*”，“/”运算</p></li><li><p>calc()函数遵循数学运算优先级规则</p></li></ul><h5 id="candy-vh"><a href="#candy-vh" class="headerlink" title=":candy: vh"></a>:candy: vh</h5><blockquote><p>相对于视口的高度</p><p>视口被均分为100个单位的vh</p></blockquote><p>例如：</p><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.bw</span> &#123;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">16vh</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>如果此时的视口高度为100px，那么上述的示例中的字体大小为(16/100) * 100,既为16px</p><h4 id="fallen-leaf-JS实现形式"><a href="#fallen-leaf-JS实现形式" class="headerlink" title=":fallen_leaf: JS实现形式"></a>:fallen_leaf: JS实现形式</h4><p><img src="http://bwblog.oss-cn-hangzhou.aliyuncs.com/blogimg/scroll-indicator-2.gif" alt="转载"></p><p>如图，可以看到滚动提示条的实现是通过控制<code>scroll-line</code>的宽度。也就是在滚动内容的时候，width的值从0%变化到100%，而要实现这一点，就得知道两个参数：</p><ul><li>文档的高度 <code>document.body.scrollHeight || $(document).height()</code></li><li>可视区域的高度 <code>document.body.clientHeight || $(window).height()</code></li></ul><p>如下图所示：</p><p><img src="http://bwblog.oss-cn-hangzhou.aliyuncs.com/blogimg/scroll-indicator-3.png" alt="转载"></p><p>文档高度和视口高度有一个差值max，而这个值是需要滚动的值，简单理解就是<code>scroll-line</code>宽度为100%时的值。这样我们就知道了，整个文档滚动的最大值。另外，我们还需要知道滚动条滚动的距离$(window).scrollTop(),有了这两个值，我们就可以算出进度条当前的宽度<code>($(window).scrollTop() / ($(document).height() - $(window).height())) * 100%</code></p><p><img src="http://bwblog.oss-cn-hangzhou.aliyuncs.com/blogimg/scroll-indicator-4.gif" alt="转载"></p><h4 id="🍂-CSS实现形式"><a href="#🍂-CSS实现形式" class="headerlink" title="🍂 CSS实现形式"></a>🍂 CSS实现形式</h4><p>首先，为了实现进度提示条的功能得用到<code>线性渐变</code></p><p><a href="https://juejin.im/post/5c35953ce51d45523f04b6d2?utm_source=gold_browser_extension" target="_blank" rel="noopener">原文地址</a></p><p><a href="https://codepen.io/youstde/pen/PXyaYQ" target="_blank" rel="noopener">demo</a></p><h4 id="🍂-拓展"><a href="#🍂-拓展" class="headerlink" title="🍂 拓展"></a>🍂 拓展</h4><p><strong>1、要获取当前页面的滚动条的纵坐标的位置，应该用：</strong>​      </p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">document.documentElement.scrollTop</span><br></pre></td></tr></table></figure><p>之所以不用document.body.scrollTop的原因是documentElement对应的是html标签,而body对应的是body标签</p><p><strong>2、关于document.body和document.documentElement的区别</strong></p><p>body是DOM对象中body的子节点,即<body>标签，而documentElement是整个节点树的根结点，即<html>标签。<br>即document.body.clientHeight获取到的是body的高度，而document.documentElement.clientHeight获取到的是   整个html的高度，然而当文档处于怪癖模式下时，我们使用document.documentElement.scrollTop获取到属性的值是为0的，而在w3c标准文档模式下，document.body.scrollTop的值是为0的，因此为了好的兼容性，我们可以这样写：</html></body></p><p><strong>var top = document.documentElement.scrollHeight || document.body.scrollHeight</strong></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h4 id=&quot;fallen-leaf-准备&quot;&gt;&lt;a href=&quot;#fallen-leaf-准备&quot; class=&quot;headerlink&quot; title=&quot;:fallen_leaf:准备&quot;&gt;&lt;/a&gt;:fallen_leaf:准备&lt;/h4&gt;&lt;p&gt;在切入正题之前，先看两个与之相关的知识点
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>JS学习笔记-Promise链式调用解析</title>
@@ -427,28 +448,6 @@
       
       
         &lt;h2 id=&quot;window-onload和-document-ready-的区别&quot;&gt;&lt;a href=&quot;#window-onload和-document-ready-的区别&quot; class=&quot;headerlink&quot; title=&quot;window.onload和$(document).
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>面试中的问题CSS</title>
-    <link href="http://yoursite.com/2017/11/28/%E9%9D%A2%E8%AF%95%E4%B8%AD%E7%9A%84%E9%97%AE%E9%A2%98CSS/"/>
-    <id>http://yoursite.com/2017/11/28/面试中的问题CSS/</id>
-    <published>2017-11-28T02:25:53.000Z</published>
-    <updated>2018-10-24T03:26:04.200Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="垂直居中"><a href="#垂直居中" class="headerlink" title="垂直居中"></a><code>垂直居中</code></h2><p>1.使用定位</p><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">position</span>: <span class="selector-tag">absolute</span>;</span><br><span class="line"><span class="selector-tag">left</span>: 50%;</span><br><span class="line"><span class="selector-tag">top</span>: 50%;</span><br><span class="line"><span class="selector-tag">transform</span><span class="selector-pseudo">:translateY(-50</span>%);</span><br></pre></td></tr></table></figure><p>2.table布局</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"something-semantic"</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"something-else-semantic"</span>&gt;</span></span><br><span class="line">       Unknown stuff to be centered.</span><br><span class="line">   <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.something-semantic</span> &#123;</span><br><span class="line">   <span class="attribute">display</span>: table;</span><br><span class="line">   <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.something-else-semantic</span> &#123;</span><br><span class="line">   <span class="attribute">display</span>: table-cell;</span><br><span class="line">   <span class="attribute">text-align</span>: center;</span><br><span class="line">   <span class="attribute">vertical-align</span>: middle;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>3.flex布局</p><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.box2</span>&#123;</span><br><span class="line">    <span class="attribute">display</span>: flex;</span><br><span class="line">    <span class="attribute">justify-content</span>:center;</span><br><span class="line">    <span class="attribute">align-items</span>:Center;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;垂直居中&quot;&gt;&lt;a href=&quot;#垂直居中&quot; class=&quot;headerlink&quot; title=&quot;垂直居中&quot;&gt;&lt;/a&gt;&lt;code&gt;垂直居中&lt;/code&gt;&lt;/h2&gt;&lt;p&gt;1.使用定位&lt;/p&gt;
-&lt;figure class=&quot;highlight css&quot;&gt;&lt;table&gt;&lt;
       
     
     </summary>
