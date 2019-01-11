@@ -186,15 +186,16 @@
   <div class="post-toc" id="post-toc">
     <h2 class="post-toc-title">文章目录</h2>
     <div class="post-toc-content">
-      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#fallen-leaf-准备"><span class="toc-text">:fallen_leaf: 准备</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#candy-calc"><span class="toc-text">:candy:calc()</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#candy-vh"><span class="toc-text">:candy: vh</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fallen-leaf-JS实现形式"><span class="toc-text">:fallen_leaf: JS实现形式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#🍂-CSS实现形式"><span class="toc-text">🍂 CSS实现形式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#🍂-拓展"><span class="toc-text">🍂 拓展</span></a></li></ol>
-    </div>
+      <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#candy-calc"><span class="toc-text">:candy:calc()</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#candy-vh"><span class="toc-text">:candy: vh</span></a></li></ol><li class="toc-item toc-level-4"><a class="toc-link" href="#🍂-CSS实现形式"><span class="toc-text">🍂 CSS实现形式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#🍂-拓展"><span class="toc-text">🍂 拓展</span></a>
+    </li></div>
   </div>
 
 
 
     <div class="post-content">
       
-        <h4 id="fallen-leaf-准备"><a href="#fallen-leaf-准备" class="headerlink" title=":fallen_leaf: 准备"></a>:fallen_leaf: 准备</h4><p>在切入正题之前，先看两个与之相关的知识点：</p>
+        <p>:fallen_leaf: 准备</p>
+<p>在切入正题之前，先看两个与之相关的知识点：</p>
 <h5 id="candy-calc"><a href="#candy-calc" class="headerlink" title=":candy:calc()"></a>:candy:calc()</h5><blockquote>
 <p>用于动态计算长度值</p>
 <p>支持的版本：css3</p>
@@ -218,7 +219,8 @@
 <p>例如：</p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.bw</span> &#123;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">16vh</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>如果此时的视口高度为100px，那么上述的示例中的字体大小为(16/100) * 100,既为16px</p>
-<h4 id="fallen-leaf-JS实现形式"><a href="#fallen-leaf-JS实现形式" class="headerlink" title=":fallen_leaf: JS实现形式"></a>:fallen_leaf: JS实现形式</h4><p><img src="http://bwblog.oss-cn-hangzhou.aliyuncs.com/blogimg/scroll-indicator-2.gif" alt="转载"></p>
+<p>:fallen_leaf:  JS实现形式</p>
+<p><img src="http://bwblog.oss-cn-hangzhou.aliyuncs.com/blogimg/scroll-indicator-2.gif" alt="转载"></p>
 <p>如图，可以看到滚动提示条的实现是通过控制<code>scroll-line</code>的宽度。也就是在滚动内容的时候，width的值从0%变化到100%，而要实现这一点，就得知道两个参数：</p>
 <ul>
 <li>文档的高度 <code>document.body.scrollHeight || $(document).height()</code></li>
