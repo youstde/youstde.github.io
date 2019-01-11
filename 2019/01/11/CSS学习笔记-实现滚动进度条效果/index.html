@@ -183,14 +183,19 @@
 
     
     
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#准备"><span class="toc-text">准备</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#calc"><span class="toc-text">calc()</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#vh"><span class="toc-text">vh</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#JS实现形式"><span class="toc-text">JS实现形式</span></a></li></ol>
+    </div>
+  </div>
+
 
 
     <div class="post-content">
       
-        <p>:fallen_leaf: 准备</p>
-<p>在切入正题之前，先看两个与之相关的知识点：</p>
-<p>:candy:calc()</p>
-<blockquote>
+        <h4 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h4><p>在切入正题之前，先看两个与之相关的知识点：</p>
+<h5 id="calc"><a href="#calc" class="headerlink" title="calc()"></a>calc()</h5><blockquote>
 <p>用于动态计算长度值</p>
 <p>支持的版本：css3</p>
 </blockquote>
@@ -206,16 +211,14 @@
 <li><p>calc()函数遵循数学运算优先级规则</p>
 </li>
 </ul>
-<p>:candy: vh</p>
-<blockquote>
+<h5 id="vh"><a href="#vh" class="headerlink" title="vh"></a>vh</h5><blockquote>
 <p>相对于视口的高度</p>
 <p>视口被均分为100个单位的vh</p>
 </blockquote>
 <p>例如：</p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.bw</span> &#123;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">16vh</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>如果此时的视口高度为100px，那么上述的示例中的字体大小为(16/100) * 100,既为16px</p>
-<p>:fallen_leaf: JS实现形式</p>
-<p><img src="http://bwblog.oss-cn-hangzhou.aliyuncs.com/blogimg/scroll-indicator-2.gif" alt="转载"></p>
+<h4 id="JS实现形式"><a href="#JS实现形式" class="headerlink" title="JS实现形式"></a>JS实现形式</h4><p><img src="http://bwblog.oss-cn-hangzhou.aliyuncs.com/blogimg/scroll-indicator-2.gif" alt="转载"></p>
 <p>如图，可以看到滚动提示条的实现是通过控制<code>scroll-line</code>的宽度。也就是在滚动内容的时候，width的值从0%变化到100%，而要实现这一点，就得知道两个参数：</p>
 <ul>
 <li>文档的高度 <code>document.body.scrollHeight || $(document).height()</code></li>
@@ -229,7 +232,7 @@
 <p>首先，为了实现进度提示条的功能得用到<code>线性渐变</code></p>
 <p><a href="https://juejin.im/post/5c35953ce51d45523f04b6d2?utm_source=gold_browser_extension" target="_blank" rel="noopener">原文地址</a></p>
 <p><a href="https://codepen.io/youstde/pen/PXyaYQ" target="_blank" rel="noopener">demo</a></p>
-<p>🍂 拓展</p>
+<p>:candy: 拓展</p>
 <p><strong>1、要获取当前页面的滚动条的纵坐标的位置，应该用：</strong>​      </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">document.documentElement.scrollTop</span><br></pre></td></tr></table></figure>
 <p>之所以不用document.body.scrollTop的原因是documentElement对应的是html标签,而body对应的是body标签</p>
